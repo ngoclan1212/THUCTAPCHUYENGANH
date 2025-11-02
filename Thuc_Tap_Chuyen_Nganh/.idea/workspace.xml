@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9b53d6f7-eda7-4b82-8fc3-b123a91e23bc" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../Thuc_Tap_Chuyen_Nganh\exportToHTML" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="34lQjP8WB5je3bFLx9hK2KX3geT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.bin\\www.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;24.11.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;24.9.2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Thuc_Tap_Chuyen_Nganh/public/img&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Thuc_Tap_Chuyen_Nganh\public\img" />
+      <recent name="D:\Thuc_Tap_Chuyen_Nganh\public" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b53d6f7-eda7-4b82-8fc3-b123a91e23bc" name="Changes" comment="" />
+      <created>1761785812766</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761785812766</updated>
+      <workItem from="1761785814052" duration="1694000" />
+      <workItem from="1761787648509" duration="246000" />
+      <workItem from="1761789009672" duration="57000" />
+      <workItem from="1761794091313" duration="1488000" />
+      <workItem from="1761796542983" duration="606000" />
+      <workItem from="1761797178059" duration="21000" />
+      <workItem from="1761797705976" duration="1413000" />
+      <workItem from="1761801584852" duration="139000" />
+      <workItem from="1761893695684" duration="115000" />
+      <workItem from="1761897361816" duration="374000" />
+      <workItem from="1761905152802" duration="170000" />
+      <workItem from="1761905884074" duration="41000" />
+      <workItem from="1761914489244" duration="5717000" />
+      <workItem from="1761920278820" duration="74000" />
+      <workItem from="1761921108149" duration="28000" />
+      <workItem from="1761921589503" duration="207000" />
+      <workItem from="1761921809985" duration="44000" />
+      <workItem from="1761973324054" duration="2221000" />
+      <workItem from="1761975828631" duration="121000" />
+      <workItem from="1761976884232" duration="175000" />
+      <workItem from="1761987257049" duration="850000" />
+      <workItem from="1762009347630" duration="7353000" />
+      <workItem from="1762074411366" duration="178000" />
+      <workItem from="1762074652965" duration="2090000" />
+      <workItem from="1762076986193" duration="5958000" />
+      <workItem from="1762083136895" duration="146000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
