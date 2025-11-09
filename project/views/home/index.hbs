@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Shop - Featured Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fdfdfd;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background:#5ca0d3;
+            padding:1rem 2rem;
+        }
+        .navbar-brand { color:#fff; font-weight:700; font-size:1.5rem; }
+        .nav-link { color:#fff; margin-left:1rem; }
+
+        /* Giỏ hàng cố định */
+        #cart-fly {
+            position: fixed;
+            width: 40px; height: 40px;
+            top: 20px; right: 20px;
+            z-index: 9999;
+            background:url('img/cart-icon.png') no-repeat center/contain;
+        }
+
+        /* Banner 2 cột */
+        #mainBanner {
+            display:flex; flex-wrap:wrap;
+            height:500px; overflow:hidden; margin-bottom:60px;
+        }
+        #mainBanner .banner-text {
+            flex:1;
+            padding:50px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease-out;
+        }
+        #mainBanner.loaded .banner-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        #mainBanner .banner-text h1 { font-size:50px; font-weight:700; color:#2f514b; margin-bottom:20px; }
+        #mainBanner .banner-text p { font-size:20px; color:#2f514b; margin-bottom:20px; }
+        #mainBanner .banner-text .btn {
+            background:#5ca0d3; color:#fff; border-radius:8px; width:fit-content;
+            transition: all 0.3s;
+        }
+        #mainBanner .banner-text .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        #mainBanner .banner-img { flex:1; }
+        #mainBanner .banner-img img { width:100%; height:100%; object-fit:cover; border-radius:0 50px 50px 0; }
+
+        /* Sản phẩm nổi bật */
+        #products { padding:60px 0; text-align:center; }
+        #products h2 { font-family:'Cormorant Garamond', serif; font-size:36px; color:#2f514b; margin-bottom:40px; }
+
+        .product-grid {
+            display:flex; justify-content:center; gap:20px; flex-wrap:wrap;
+        }
+        .card-product {
+            background:#f4f8f7;
+            width:180px;
+            border-radius:15px;
+            overflow:hidden;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+            text-align:center;
+            opacity:0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .card-product.visible {
+            opacity:1;
+            transform: translateY(0);
+        }
+        .card-product img { width:100%; height:150px; object-fit:cover; transition: transform 0.3s; }
+        .card-product:hover img { transform: scale(1.05); }
+        .card-product h5 { margin:10px 0; color:#2f514b; font-weight:600; }
+        .card-product p { color:#5ca0d3; font-weight:700; margin-bottom:10px; }
+        .btn-add-cart {
+            background:#fff; color:#5ca0d3; border:2px solid #5ca0d3;
+            border-radius:8px; margin-bottom:15px; transition:0.3s;
+            padding:6px 12px; font-weight:600;
+        }
+        .btn-add-cart:hover { background:#5ca0d3; color:#fff; }
+
+        /* Newsletter */
+        #newsletter {
+            background:linear-gradient(90deg,#5ca0d3,#eaf4f2);
+            padding:60px 0; color:#fff; text-align:center;
+        }
+        #newsletter input { border-radius:8px 0 0 8px; padding:10px; width:300px; }
+        #newsletter button { border-radius:0 8px 8px 0; }
+
+        /* Thông báo giỏ hàng */
+        #cart-message {
+            position: fixed;
+            top: 20px; right: 20px;
+            background:#5ca0d3; color:#fff;
+            padding:12px 24px; border-radius:8px;
+            display:none; z-index:9999; font-weight:bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive */
+        @media(max-width:992px){
+            #mainBanner { flex-direction:column; }
+            .banner-img img { border-radius:0 0 50px 50px; }
+            .product-grid { justify-content:center; }
+        }
+        @media(max-width:576px){ .card-product { width:100%; max-width:250px; } }
+
+    </style>
+</head>
+<body>
+
+<!-- Giỏ hàng cố định -->
+<div id="cart-fly"></div>
+
+<!-- Banner 2 cột -->
+<section id="mainBanner">
+    <div class="banner-text">
+        <h1>Fresh <span style="color:#5ca0d3;">Blooms</span> for Every Moment</h1>
+        <p>Elegant. Timeless. Handcrafted with love.</p>
+        <a href="#products" class="btn">Khám phá sản phẩm</a>
+    </div>
+    <div class="banner-img">
+        <img src="img/banner6.png" alt="Banner">
+    </div>
+</section>
+
+<!-- Sản phẩm nổi bật chính giữa -->
+<section id="products">
+    <h2>Sản phẩm nổi bật</h2>
+    <div class="product-grid">
+        <div class="card-product">
+            <img src="img/1.jpg" alt="Hoa hướng dương">
+            <h5>Hoa hướng dương</h5>
+            <p>1.000.000₫</p>
+            <button class="btn-add-cart">Thêm vào giỏ</button>
+        </div>
+        <div class="card-product">
+            <img src="img/10.jpg" alt="Hoa cẩm tú cầu">
+            <h5>Hoa cẩm tú cầu</h5>
+            <p>1.200.000₫</p>
+            <button class="btn-add-cart">Thêm vào giỏ</button>
+        </div>
+        <div class="card-product">
+            <img src="img/8.jpg" alt="Hoa tulip trắng">
+            <h5>Hoa tulip trắng</h5>
+            <p>1.250.000₫</p>
+            <button class="btn-add-cart">Thêm vào giỏ</button>
+        </div>
+        <div class="card-product">
+            <img src="img/2.jpg" alt="Hoa hồng đỏ">
+            <h5>Hoa hồng đỏ</h5>
+            <p>1.000.000₫</p>
+            <button class="btn-add-cart">Thêm vào giỏ</button>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section id="newsletter">
+    <h2>Nhận tin khuyến mãi</h2>
+    <p>Đăng ký để nhận ưu đãi và tin tức mới nhất từ cửa hàng</p>
+    <form class="d-flex justify-content-center mt-3">
+        <input type="email" placeholder="Nhập email của bạn">
+        <button type="submit" class="btn btn-light fw-bold">Đăng ký</button>
+    </form>
+</section>
+
+<!-- Thông báo giỏ hàng -->
+<div id="cart-message">Đã thêm vào giỏ hàng</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Banner fade-in
+    window.addEventListener('load', () => {
+        document.getElementById('mainBanner').classList.add('loaded');
+    });
+
+    // Card sản phẩm fade-in khi scroll
+    const fadeElements = document.querySelectorAll('.card-product');
+    function handleScroll() {
+        fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 50) el.classList.add('visible');
+        });
+    }
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+
+    // Giỏ hàng bay
+    const cartIcon = document.getElementById('cart-fly');
+    const cartButtons = document.querySelectorAll('.btn-add-cart');
+    const cartMessage = document.getElementById('cart-message');
+
+    cartButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Thông báo
+            cartMessage.style.display='block';
+            setTimeout(()=>cartMessage.style.display='none',2000);
+
+            // Bay icon
+            const flyIcon = document.createElement('div');
+            flyIcon.style.width='30px';
+            flyIcon.style.height='30px';
+            flyIcon.style.background="url('img/cart-icon.png') no-repeat center/contain";
+            flyIcon.style.position='absolute';
+            const rect = btn.getBoundingClientRect();
+            flyIcon.style.top=rect.top+'px';
+            flyIcon.style.left=rect.left+'px';
+            flyIcon.style.zIndex=1000;
+            document.body.appendChild(flyIcon);
+
+            const endX = cartIcon.getBoundingClientRect().left;
+            const endY = cartIcon.getBoundingClientRect().top;
+
+            flyIcon.animate([
+                { transform: `translate(0,0) scale(1)` },
+                { transform: `translate(${endX - rect.left}px, ${endY - rect.top}px) scale(0.5)` }
+            ], { duration:800, easing:'ease-in-out' });
+
+            setTimeout(()=>flyIcon.remove(),800);
+        });
+    });
+</script>
+</body>
+</html>
