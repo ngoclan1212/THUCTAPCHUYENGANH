@@ -1,0 +1,39 @@
+<main class="login-page d-flex flex-column align-items-center justify-content-center"
+      style="min-height: 80vh; background-color: #b3d9ff;">  {{!-- xanh nhạt như logo --}}
+    <div class="card shadow-sm border-0" style="max-width: 400px; width: 100%; border-radius: 12px;">
+        <div class="card-body p-4">
+            <h3 class="text-center mb-3 fw-bold" style="color:#1a75cf;">LOGIN</h3>
+            <p class="text-center text-muted small mb-4">Welcome to N&Fresh Flowers</p>
+
+            <form>
+                <div class="mb-3">
+                    <label for="emailOrPhone" class="form-label">Email or phone number</label>
+                    <input type="text" class="form-control" id="emailOrPhone" placeholder="Enter your email or phone">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn w-100 mb-3"
+                        style="background-color:#1a75cf; border:none; color:white; font-weight:600;">
+                    Login
+                </button>
+            </form>
+
+            <div class="text-center">
+                <a href="/forget" class="nav-item nav-link small d-block mb-2" style="color:#1a75cf;">Forget password?</a>
+                <p class="small">You don't have an account yet?
+                    <a href="#" style="color:#1a75cf;">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
