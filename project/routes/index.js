@@ -38,4 +38,7 @@ router.get('/customer', function(req, res, next) {
     res.render('layouts/customer', { title: 'Forget N&Wool Flowers' });
 });
 
+router.get('/test', function(req, res, next) {
+    res.render('layouts/test', { title: 'Forget N&Wool Flowers' });
+});
 module.exports = router;
