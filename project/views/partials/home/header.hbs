@@ -19,8 +19,7 @@
         <li class="nav-item"><a href="/pages" class="nav-link">Pages</a></li>
         <li class="nav-item"><a href="/shop" class="nav-link">Shop</a></li>
         <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="/customer" class="nav-link">Customer</a></li>
-        <li class="nav-item"><a href="/test" class="nav-link">Test</a></li>
+        
     </ul>
 
     <!-- Cart + Auth Buttons -->
@@ -31,9 +30,13 @@
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
         </a>
 
-        <!-- Login & Sign Up Buttons -->
-        <a href="/login" class="btn-auth me-2">Login</a>
-        <a href="/sign" class="btn-auth">Sign Up</a>
+        {{#if user}}
+            <span style="color: #4c90c8; margin-right:12px;">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
+            <a href="/logout" class="btn-auth me-2">Logout</a>
+        {{else}}
+            <a href="/login" class="btn-auth me-2">Login</a>
+            <a href="/sign" class="btn-auth">Sign Up</a>
+        {{/if}}
     </div>
 </div>
 </div>
