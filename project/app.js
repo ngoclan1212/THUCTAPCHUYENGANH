@@ -1,6 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 const { engine } = require('express-handlebars');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
 var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -14,25 +17,57 @@ app.engine(
         layoutsDir: path.join(__dirname, 'views', 'layouts')
     })
 );
-const session = require('express-session');
 
 // Middleware session
 app.use(session({
     secret: 'secret_key_for_session', // đổi thành gì đó bảo mật
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
+    // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
 }));
+app.use(flash());
+//PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
+
+// You might also need custom middleware to make flash messages available in templates
+app.use((req, res, next) => {
+    res.locals.user = req.user ? req.user.toObject() : null;
+    res.locals.success_message = req.flash('success_message');
+    res.locals.error_message = req.flash('error_message');
+    res.locals.error = req.flash('error'); // Passport.js often uses 'error'
+    res.locals.errors = req.flash('errors');
+    next();
+});
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
+console.log(path.join(__dirname, 'views', 'layouts'));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+
+app.set('view engine', 'hbs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+
+app.use('/', indexRouter);
+app.use('/admin', adminRouter);
+app.use('/users', usersRouter);
+
 //var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const {Strategy: LocalStrategy} = require("passport-local");
 const User = require('./models/User');
 const bcryptjs = require('bcryptjs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/node')
     .then(()=>{
         console.log("MongoDB connected successfully!");
@@ -63,7 +98,39 @@ app.post('/login', (req, res) => {
         }
     })
 });
+app.post('/sign', async (req, res) => {
+    try {
+        const { email, phone, password } = req.body;
 
+        // kiểm tra user đã tồn tại chưa
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already registered" });
+        }
+
+        // hash password
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(password, salt);
+
+        const newUser = new User({
+            email,
+            phone,
+            password: hashedPassword
+        });
+
+        await newUser.save();
+
+        // trả về thông tin user (không trả password)
+        const userData = {
+            email: newUser.email,
+            phone: newUser.phone
+        };
+
+        res.status(201).json({ message: "User registered", user: userData });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.post('/register',  (req,res) => {
         console.log(req.body);
@@ -85,6 +152,7 @@ app.post('/register',  (req,res) => {
         });
     }
 );
+
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -99,24 +167,14 @@ app.get('/logout', (req, res) => {
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public'));
 
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
 
-app.use('/', indexRouter);
-app.use('/admin', adminRouter);
-app.use('/users', usersRouter);
+
 
 
 

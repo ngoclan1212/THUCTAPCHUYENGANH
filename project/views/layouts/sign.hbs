@@ -1,63 +1,105 @@
 <main class="signup-page d-flex flex-column align-items-center justify-content-center"
       style="min-height: 80vh; background-color: #b3d9ff;">
 
-    <div class="card shadow-sm border-0" style="max-width: 450px; width: 100%; border-radius: 12px;">
-        <div class="card-body p-4 text-center">
-
-            <h3 class="fw-bold mb-3" style="color:#1a75cf;">Sign Up</h3>
-            <p class="text-muted small mb-4">Welcome to N&amp;Fresh Flowers</p>
-
-            <!-- FORM SIGN UP -->
-            <form action="/register" method="POST">
-
-                <!-- Full Name -->
-                <div class="mb-3 text-start">
-                    <label for="fullname" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullname" name="name"
-                           placeholder="Enter your full name" >
-                </div>
-
-                <!-- Email Address -->
-                <div class="mb-3 text-start">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email"
-                           placeholder="Enter your email" >
-                </div>
-
-                <!-- Phone Number -->
-                <div class="mb-3 text-start">
-                    <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" name="phone"
-                           placeholder="Enter your phone number" >
-                </div>
-
-                <!-- Password -->
-                <div class="mb-3 text-start">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Enter your password" >
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="mb-3 text-start">
-                    <label for="confirmPassword" class="form-label">Please re-enter your password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                           placeholder="Re-enter your password" >
-                </div>
-
-                <!-- Submit -->
-                <button type="submit" class="btn w-100 mb-3"
-                        style="background-color:#1a75cf; border:none; color:white; font-weight:600;">
-                    Sign Up
-                </button>
-            </form>
-
-            <!-- Login link -->
-            <p class="small mt-2">
-                You already have an account?
-                <a href="/login" style="color:#1a75cf; font-weight:500;">Login</a>
-            </p>
-
+<div class="card shadow-sm border-0" style="max-width: 450px; width: 100%; border-radius: 12px;">
+<div class="card-body p-4 text-center">
+    <h3 class="fw-bold mb-3" style="color:#1a75cf;">Sign Up</h3>
+    <p class="text-muted small mb-4">Welcome to N&amp;Fresh Flowers</p>
+    {{#if error_message}}
+        <div class="alert alert-danger">
+            {{error_message}}
         </div>
-    </div>
+    {{/if}}
+    {{#if errors}}
+        {{#each errors}}
+            <div class="alert alert-danger">
+                {{message}}
+            </div>
+        {{/each}}
+    {{/if}}
+
+    <!-- FORM SIGN UP -->
+    <form action="/sign" method="POST">
+
+        <!-- Full Name -->
+<!--        <div class="mb-3 text-start">-->
+<!--            <label for="fullName" class="form-label">Full Name</label>-->
+<!--            <input type="text" class="form-control" id="fullName" name="fullName"-->
+<!--                   placeholder="Enter your full name">-->
+<!--        </div>-->
+        <div class="form-group">
+            <div class="form-row text-start">
+                <div class="md-3">
+                    <label for="exampleInputName">First name</label>
+                    <input value="{{firstName}}" name="firstName" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                </div>
+                <div class="md-3">
+                    <label for="exampleInputLastName">Last name</label>
+                    <input value="{{lastName}}" name="lastName" class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row text-start">
+                <div class="md-3">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input value="{{email}}" name="email" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row text-start">
+                <div class="md-3">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                </div>
+                <div class="md-3">
+                    <label for="exampleConfirmPassword">Confirm password</label>
+                    <input name="password1" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                </div>
+            </div>
+        </div>
+        <!-- Email Address -->
+<!--        <div class="mb-3 text-start">-->
+<!--            <label for="email" class="form-label">Email Address</label>-->
+<!--            <input type="email" class="form-control" id="email" name="email"-->
+<!--                   placeholder="Enter your email">-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Phone Number &ndash;&gt;-->
+<!--        <div class="mb-3 text-start">-->
+<!--            <label for="phone" class="form-label">Phone Number</label>-->
+<!--            <input type="tel" class="form-control" id="phone" name="phone"-->
+<!--                   placeholder="Enter your phone number">-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Password &ndash;&gt;-->
+<!--        <div class="mb-3 text-start">-->
+<!--            <label for="password" class="form-label">Password</label>-->
+<!--            <input type="password" class="form-control" id="password" name="password"-->
+<!--                   placeholder="Enter your password">-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Confirm Password &ndash;&gt;-->
+<!--        <div class="mb-3 text-start">-->
+<!--            <label for="confirmPassword" class="form-label">Please re-enter your password</label>-->
+<!--            <input type="password" class="form-control" id="pass" name="pass"-->
+<!--                   placeholder="Re-enter your password">-->
+<!--        </div>-->
+
+        <!-- Submit -->
+        <button type="submit" class="btn w-100 mb-3"
+                style="background-color:#1a75cf; border:none; color:white; font-weight:600;">
+            Sign Up
+        </button>
+    </form>
+
+    <!-- Login link -->
+    <p class="small mt-2">
+        You already have an account?
+        <a href="/login" style="color:#1a75cf; font-weight:500;">Login</a>
+    </p>
+
+</div>
+</div>
 </main>

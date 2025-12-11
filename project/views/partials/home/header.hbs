@@ -19,25 +19,23 @@
         <li class="nav-item"><a href="/pages" class="nav-link">Pages</a></li>
         <li class="nav-item"><a href="/shop" class="nav-link">Shop</a></li>
         <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-        
     </ul>
 
     <!-- Cart + Auth Buttons -->
     <div class="d-flex align-items-center ms-3">
         <!-- Cart Icon -->
-        <a href="#" class="text-dark me-3 position-relative">
+        <a href="/giohang" class="text-dark me-3 position-relative">
             <i class="bi bi-cart3 fs-4"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
         </a>
-
-        {{#if user}}
-            <span style="color: #4c90c8; margin-right:12px;">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
-            <a href="/logout" class="btn-auth me-2">Logout</a>
-        {{else}}
-            <a href="/login" class="btn-auth me-2">Login</a>
-            <a href="/sign" class="btn-auth">Sign Up</a>
-        {{/if}}
     </div>
+    {{#if user}}
+        <span style="color: #4c90c8; margin-right:12px;">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
+        <a href="/logout" class="btn-auth me-2">Logout</a>
+    {{else}}
+        <a href="/login" class="btn-auth me-2">Login</a>
+        <a href="/sign" class="btn-auth">Sign Up</a>
+    {{/if}}
 </div>
 </div>
 </nav>
