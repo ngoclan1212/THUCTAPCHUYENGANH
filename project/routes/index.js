@@ -49,7 +49,7 @@ router.get('/login', function(req, res, next) {
 });
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/admin',
+        // successRedirect: '/admin',
         failureRedirect: '/login',
         failureFlash: true
     })(req, res, () => {
@@ -143,7 +143,7 @@ router.post('/sign', function(req, res, next) {
                 })
             } else {
                 req.flash('error_message', 'E-mail is exist!');
-                res.redirect('/login');
+                res.redirect('/sign');
             }
 
         });

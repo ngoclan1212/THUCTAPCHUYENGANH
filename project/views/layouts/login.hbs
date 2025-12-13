@@ -1,13 +1,20 @@
-<main class="login-page d-flex flex-column align-items-center justify-content-center"
-      style="min-height: 80vh; background-color: #b3d9ff;">
+<main class="login-page d-flex flex-column align-items-center justify-content-center">
 
-    <div class="card shadow-sm border-0" style="max-width: 400px; width: 100%; border-radius: 12px;">
+    <div class="card shadow-sm border-0" >
         <div class="card-body p-4">
-            <h3 class="text-center mb-3 fw-bold" style="color:#1a75cf;">LOGIN</h3>
+            <h3 class="text-center mb-3 fw-bold" >LOGIN</h3>
             <p class="text-center text-muted small mb-4">Welcome to N&Fresh Flowers</p>
-
+            {{#if error}}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {{/if}}
             <form action="/login" method="POST">
-
+                {{#if success_message}}
+                    <div class="alert alert-danger">
+                        {{success_message}}
+                    </div>
+                {{/if}}
                 <div class="mb-3">
                     <label for="email" class="form-label">Email or phone number</label>
 
@@ -29,16 +36,15 @@
                     <label class="form-check-label" for="rememberMe">Remember me</label>
                 </div>
 
-                <button type="submit" class="btn w-100 mb-3"
-                        style="background-color:#1a75cf; border:none; color:white; font-weight:600;">
+                <button type="submit" class="btn w-100 mb-3">
                     Login
                 </button>
             </form>
 
             <div class="text-center">
-                <a href="/forget" class="nav-item nav-link small d-block mb-2" style="color:#1a75cf;">Forget password?</a>
+                <a href="/forget" class="nav-item nav-link small d-block mb-2" >Forget password?</a>
                 <p class="small">You don't have an account yet?
-                    <a href="/sign" style="color:#1a75cf;">Sign up</a>
+                    <a href="/sign" >Sign up</a>
                 </p>
             </div>
         </div>

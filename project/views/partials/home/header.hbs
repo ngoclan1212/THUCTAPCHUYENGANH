@@ -1,16 +1,16 @@
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 fw-bold" style="font-family: 'Playfair Display', serif; color:#5ca0d3>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 fw-bold">
     <div class="container">
-<!-- Logo -->
-<a href="/" class="navbar-brand d-flex align-items-center">
-    <i class="bi bi-flower1 me-2 text-primary fs-4"></i>
-    <span style="color:#5ca0d3; font-weight:700; font-size:1.5rem;">N&Fresh Flowers</span>
-</a>
+    <!-- Logo -->
+        <a href="/" class="navbar-brand d-flex align-items-center">
+            <i class="bi bi-flower1 me-2 text-primary fs-4"></i>
+            <span>N&Fresh Flowers</span>
+        </a>
 
-<!-- Menu toggle (mobile) -->
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-    <span class="navbar-toggler-icon"></span>
-</button>
+        <!-- Menu toggle (mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
 <!-- Menu items -->
 <div id="menu" class="collapse navbar-collapse">
@@ -30,7 +30,7 @@
         </a>
     </div>
     {{#if user}}
-        <span style="color: #4c90c8; margin-right:12px;">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
+        <span class="text-info">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
         <a href="/logout" class="btn-auth me-2">Logout</a>
     {{else}}
         <a href="/login" class="btn-auth me-2">Login</a>
@@ -40,49 +40,3 @@
 </div>
 </nav>
 
-<!-- Custom CSS -->
-<style>
-    /* === Navbar & Brand === */
-    .navbar {
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
-    }
-    .navbar-brand i {
-        color: #5ca0d3;
-    }
-
-    /* === Auth Buttons (Login & Sign Up) === */
-    .btn-auth {
-        background-color: #5ca0d3;
-        color: #fff;
-        border: 2px solid #5ca0d3;
-        border-radius: 8px;
-        padding: 6px 16px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 10px rgba(92,160,211,0.25);
-    }
-
-    /* Hover: sáng nhẹ và nổi lên */
-    .btn-auth:hover {
-        background-color: #4c90c8;
-        border-color: #4c90c8;
-        transform: translateY(-2px);
-        box-shadow: 0 0 15px rgba(92,160,211,0.5);
-    }
-
-    /* Click: cảm giác nhấn */
-    .btn-auth:active {
-        transform: scale(0.97);
-        box-shadow: 0 2px 6px rgba(92,160,211,0.4);
-    }
-
-    /* === Responsive tweaks === */
-    @media (max-width: 991px) {
-        .btn-auth {
-            margin-top: 8px;
-            display: inline-block;
-        }
-    }
-</style>
