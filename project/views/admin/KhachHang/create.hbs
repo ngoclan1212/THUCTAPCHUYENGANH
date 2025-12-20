@@ -1,0 +1,84 @@
+<div class="container-fluid">
+
+    <!-- ===== BREADCRUMB ===== -->
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/khachhang">Quản lý khách hàng</a>
+        </li>
+        <li class="breadcrumb-item active">Thêm khách hàng</li>
+    </ol>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="mb-4">
+        <h3 class="mb-0">➕ Thêm khách hàng mới</h3>
+        <small class="text-muted">Nhập thông tin khách hàng vào hệ thống</small>
+    </div>
+
+    <!-- ===== FORM CARD ===== -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <i class="fa fa-user-plus"></i> Thông tin khách hàng
+        </div>
+
+        <div class="card-body">
+            <form action="/admin/khachhang/create" method="POST">
+
+                <!-- NAME -->
+                <div class="form-group">
+                    <label>Họ tên khách hàng</label>
+                    <input type="text"
+                           class="form-control"
+                           name="name"
+                           placeholder="Nhập họ tên"
+                           required>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email"
+                           class="form-control"
+                           name="email"
+                           placeholder="example@gmail.com"
+                           required>
+                </div>
+
+                <!-- PHONE -->
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text"
+                           class="form-control"
+                           name="phone"
+                           placeholder="0123456789">
+                </div>
+
+                <!-- STATUS -->
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="isActive" class="form-control">
+                        <option value="true" selected>Hoạt động</option>
+                        <option value="false">Bị khoá</option>
+                    </select>
+                </div>
+
+                <!-- BUTTON -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Lưu khách hàng
+                    </button>
+
+                    <a href="/admin/khachhang" class="btn btn-secondary ml-2">
+                        Quay lại
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+

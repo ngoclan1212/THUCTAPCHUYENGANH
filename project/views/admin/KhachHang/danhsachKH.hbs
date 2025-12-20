@@ -1,0 +1,108 @@
+<div class="container-fluid">
+
+    <!-- ===== BREADCRUMB ===== -->
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Quản lý khách hàng</li>
+    </ol>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0">👥 Danh sách khách hàng</h3>
+            <small class="text-muted">Quản lý thông tin khách hàng trong hệ thống</small>
+        </div>
+        <a href="/admin/khachhang/create" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Thêm khách hàng
+        </a>
+    </div>
+
+    <!-- ===== SEARCH ===== -->
+    <form method="GET" action="/admin/khachhang" class="d-flex">
+        <input type="text"
+               name="keyword"
+               class="form-control mr-2"
+               placeholder="🔍 Tìm tên, email, SĐT..."
+               value="{{keyword}}">
+        <button class="btn btn-primary">Tìm kiếm</button>
+    </form>
+
+
+    <!-- ===== CUSTOMER TABLE ===== -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <i class="fa fa-users"></i> Danh sách khách hàng
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="thead-dark">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên khách hàng</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày đăng ký</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center">Thao tác</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {{#if users.length}}
+                    {{#each users}}
+                        <tr>
+                            <!-- STT KHÔNG DÙNG inc -->
+                            <td>{{stt}}</td>
+
+                            <td>
+                                <strong>{{this.name}}</strong>
+                            </td>
+
+                            <td>{{this.email}}</td>
+
+                            <td>{{this.phone}}</td>
+
+                            <td>{{this.createdAt}}</td>
+
+                            <td>
+                                {{#if this.isActive}}
+                                    <span class="badge badge-success">Hoạt động</span>
+                                {{else}}
+                                    <span class="badge badge-danger">Bị khoá</span>
+                                {{/if}}
+                            </td>
+
+                            <td class="text-center">
+                                <a href="/admin/khachhang/edit/{{this._id}}"
+                                   class="btn btn-sm btn-outline-warning"
+                                   title="Sửa">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <a href="/admin/khachhang/delete/{{this._id}}"
+                                   onclick="return confirm('Bạn có chắc muốn xoá khách hàng này?')"
+                                   class="btn btn-sm btn-outline-danger"
+                                   title="Xoá">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                {{else}}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">
+                            😴 Chưa có khách hàng nào
+                        </td>
+                    </tr>
+                {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+

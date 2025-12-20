@@ -1,0 +1,64 @@
+<div class="container-fluid">
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/quanlydonhang">Quản lý đơn hàng</a>
+        </li>
+        <li class="breadcrumb-item active">Cập nhật đơn</li>
+    </ol>
+
+    <div class="card shadow">
+        <div class="card-header">
+            <h5>🧾 Đơn hàng: {{order._id}}</h5>
+        </div>
+
+        <div class="card-body">
+            <form method="post">
+
+                <div class="form-group">
+                    <label>Khách hàng</label>
+                    <input class="form-control" disabled
+                           value="{{order.user.name}} - {{order.user.email}}">
+                </div>
+
+                <div class="form-group">
+                    <label>Tổng tiền</label>
+                    <input class="form-control" disabled
+                           value="{{order.total}} đ">
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="status" class="form-control">
+                        <option value="pending"
+                                {{#if (eq order.status "pending")}}selected{{/if}}>
+                            Chờ xử lý
+                        </option>
+                        <option value="completed"
+                                {{#if (eq order.status "completed")}}selected{{/if}}>
+                            Hoàn thành
+                        </option>
+                        <option value="cancelled"
+                                {{#if (eq order.status "cancelled")}}selected{{/if}}>
+                            Đã huỷ
+                        </option>
+                    </select>
+                </div>
+
+                <button class="btn btn-success">
+                    💾 Lưu thay đổi
+                </button>
+
+                <a href="/admin/quanlydonhang"
+                   class="btn btn-secondary">
+                    Quay lại
+                </a>
+
+            </form>
+        </div>
+    </div>
+
+</div>

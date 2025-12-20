@@ -1,183 +1,418 @@
 <div class="container-fluid">
-    <!-- Breadcrumbs -->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Flower Shop</li>
-    </ol>
 
-    <!-- Icon Cards -->
+    <!-- ===== WELCOME HEADER ===== -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0">👋 Xin chào Admin</h3>
+            <small class="text-muted">Tổng quan hệ thống Flower Shop hôm nay</small>
+        </div>
+        <span class="badge badge-primary p-2">
+            {{stats.today}} Hôm nay
+        </span>
+    </div>
+
+    <!-- ===== KPI CARDS ===== -->
     <div class="row">
+
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
                     <div class="card-body-icon">
-                        <i class="fa fa-fw fa-leaf"></i>
+                        <i class="fa fa-fw fa-list"></i>
                     </div>
-                    <div class="mr-5">12 New Flower Arrivals!</div>
+                    <div class="mr-5">
+                        <h5>{{stats.totalCategories}}</h5>
+                        <small>Loại hoa</small>
+                    </div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Flowers</span>
+                <a class="card-footer text-white clearfix small z-1" href="/admin/quanlyloaihoa">
+                    <span class="float-left">Quản lý loại hoa</span>
                     <span class="float-right">
                         <i class="fa fa-angle-right"></i>
                     </span>
                 </a>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-                <div class="card-body">
-                    <div class="card-body-icon">
-                        <i class="fa fa-fw fa-shopping-cart"></i>
-                    </div>
-                    <div class="mr-5">34 New Orders!</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Orders</span>
-                    <span class="float-right">
-                        <i class="fa fa-angle-right"></i>
-                    </span>
-                </a>
-            </div>
-        </div>
+
+        <!-- ORDER -->
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
                     <div class="card-body-icon">
-                        <i class="fa fa-fw fa-users"></i>
+                        <i class="fa fa-fw fa-shopping-cart"></i>
                     </div>
-                    <div class="mr-5">18 New Customers!</div>
+                    <div class="mr-5">
+                        <h5>{{stats.totalOrders}}</h5>
+                        <small>Đơn hàng</small>
+                    </div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Customers</span>
+                <a class="card-footer text-white clearfix small z-1" href="/admin/quanlydonhang">
+                    <span class="float-left">Quản lý đơn hàng</span>
                     <span class="float-right">
                         <i class="fa fa-angle-right"></i>
                     </span>
                 </a>
             </div>
         </div>
+
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fa fa-fw fa-leaf"></i>
+                    </div>
+                    <div class="mr-5">
+                        <h5>{{stats.totalProducts}}</h5>
+                        <small>Thông Kê</small>
+                    </div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="/admin/products">
+                    <span class="float-left">Thông Kê</span>
+                    <span class="float-right">
+                        <i class="fa fa-angle-right"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- USER -->
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-danger o-hidden h-100">
                 <div class="card-body">
                     <div class="card-body-icon">
-                        <i class="fa fa-fw fa-star"></i>
+                        <i class="fa fa-fw fa-users"></i>
                     </div>
-                    <div class="mr-5">Top Seller: Roses!</div>
+                    <div class="mr-5">
+                        <h5>{{stats.totalUsers}}</h5>
+                        <small>Khách hàng</small>
+                    </div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Stats</span>
+                <a class="card-footer text-white clearfix small z-1" href="/admin/KhachHang">
+                    <span class="float-left">Quản lý khách hàng</span>
                     <span class="float-right">
                         <i class="fa fa-angle-right"></i>
                     </span>
                 </a>
             </div>
         </div>
+
     </div>
 
-    <!-- Flower Sales Chart -->
-    <div class="card mb-3">
-        <div class="card-header">
-            <i class="fa fa-area-chart"></i> Monthly Flower Sales</div>
-        <div class="card-body">
-            <canvas id="flowerSalesChart" width="100%" height="30"></canvas>
-        </div>
-        <div class="card-footer small text-muted">Updated today</div>
-    </div>
-
+    <!-- ===== CHARTS ===== -->
     <div class="row">
-        <div class="col-lg-8">
-            <!-- Recent Orders Table -->
-            <div class="card mb-3">
+
+        <!-- REVENUE -->
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Recent Orders</div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Flower</th>
-                                <th>Quantity</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>#1001</td>
-                                <td>Lan Pham</td>
-                                <td>Red Roses</td>
-                                <td>12</td>
-                                <td>2025-11-16</td>
-                                <td>Delivered</td>
-                            </tr>
-                            <tr>
-                                <td>#1002</td>
-                                <td>John Doe</td>
-                                <td>Tulips</td>
-                                <td>6</td>
-                                <td>2025-11-15</td>
-                                <td>Pending</td>
-                            </tr>
-                            <tr>
-                                <td>#1003</td>
-                                <td>Mary Jane</td>
-                                <td>Orchids</td>
-                                <td>3</td>
-                                <td>2025-11-14</td>
-                                <td>Shipped</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <i class="fa fa-line-chart"></i> Doanh thu theo tháng
                 </div>
-                <div class="card-footer small text-muted">Updated today</div>
+                <div class="card-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
             </div>
-
-            <!-- Flower News Feed -->
-
         </div>
 
-        <div class="col-lg-4">
-            <!-- Top Flowers Pie Chart -->
-            <div class="card mb-3">
+        <!-- DONUT -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow">
                 <div class="card-header">
-                    <i class="fa fa-pie-chart"></i> Top Selling Flowers</div>
+                    <i class="fa fa-pie-chart"></i> Tỷ lệ đơn hàng
+                </div>
                 <div class="card-body">
-                    <canvas id="topFlowersChart" width="100%" height="100"></canvas>
+                    <canvas id="orderStatusChart"></canvas>
                 </div>
-                <div class="card-footer small text-muted">Updated today</div>
             </div>
+        </div>
 
-            <!-- Notifications / Alerts -->
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-bell-o"></i> Alerts</div>
-                <div class="list-group list-group-flush small">
-                    <a class="list-group-item list-group-item-action" href="#">
-                        <div class="media">
-                            <img class="d-flex mr-3 rounded-circle" src="" alt="">
-                            <div class="media-body">
-                                <strong>System</strong> Low stock on Red Roses.
-                                <div class="text-muted smaller">Today at 9:00 AM</div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">
+                🌸 Hoa bán chạy nhất
+            </h6>
+            <span class="badge badge-success">Top 8</span>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="thead-light">
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="12%">Hình ảnh</th>
+                        <th>Tên hoa</th>
+                        <th width="15%">Giá</th>
+                        <th width="15%">Đã bán</th>
+                        <th width="18%">Hiệu suất</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {{!-- 1 --}}
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <img src="/img/15.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Hoa mẫu mới</td>
+                        <td>500.000₫</td>
+                        <td>
+                            <span class="badge badge-success">120</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width:90%">90%</div>
                             </div>
-                        </div>
-                    </a>
-                    <a class="list-group-item list-group-item-action" href="#">
-                        <div class="media">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/45x45" alt="">
-                            <div class="media-body">
-                                <strong>System</strong> 5 orders pending shipment.
-                                <div class="text-muted smaller">Today at 10:30 AM</div>
+                        </td>
+                    </tr>
+
+                    {{!-- 2 --}}
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <img src="/img/17.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Bó Hoa 75413</td>
+                        <td>600.000₫</td>
+                        <td>
+                            <span class="badge badge-success">105</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width:85%">85%</div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="card-footer small text-muted">Updated today</div>
+                        </td>
+                    </tr>
+
+                    {{!-- 3 --}}
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <img src="/img/2.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Hoa hồng đỏ</td>
+                        <td>250.000₫</td>
+                        <td>
+                            <span class="badge badge-info">98</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" style="width:78%">78%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{!-- 4 --}}
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <img src="/img/13.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Hoa hướng dương cao cấp</td>
+                        <td>350.000₫</td>
+                        <td>
+                            <span class="badge badge-warning">82</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width:65%">65%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{!-- 5 --}}
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <img src="/img/22.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Giỏ Hoa 81349</td>
+                        <td>550.000₫</td>
+                        <td>
+                            <span class="badge badge-warning">75</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width:60%">60%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{!-- 6 --}}
+                    <tr>
+                        <td>6</td>
+                        <td>
+                            <img src="/img/4.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Giỏ Hoa 81351</td>
+                        <td>500.000₫</td>
+                        <td>
+                            <span class="badge badge-warning">63</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width:50%">50%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{!-- 7 --}}
+                    <tr>
+                        <td>7</td>
+                        <td>
+                            <img src="/img/5.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Giỏ Hoa 81352</td>
+                        <td>500.000₫</td>
+                        <td>
+                            <span class="badge badge-danger">49</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" style="width:40%">40%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{!-- 8 --}}
+                    <tr>
+                        <td>8</td>
+                        <td>
+                            <img src="/img/20.jpg" class="img-thumbnail" style="width:70px">
+                        </td>
+                        <td>Giỏ Hoa 81347</td>
+                        <td>450.000₫</td>
+                        <td>
+                            <span class="badge badge-danger">38</span>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" style="width:30%">30%</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
             </div>
+        </div>
+
+        <div class="card-footer text-muted small">
+            Cập nhật theo dữ liệu bán hàng gần nhất
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-danger">
+                📦 Tình trạng tồn kho
+            </h6>
+            <span class="badge badge-danger">Cảnh báo</span>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên hoa</th>
+                        <th>Số lượng tồn</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><img src="/img/5.jpg" width="60" class="img-thumbnail"></td>
+                        <td>Giỏ Hoa 81352</td>
+                        <td>
+                            <span class="badge badge-danger">5</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-danger">⚠ Sắp hết</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td><img src="/img/20.jpg" width="60" class="img-thumbnail"></td>
+                        <td>Giỏ Hoa 81347</td>
+                        <td>
+                            <span class="badge badge-warning">12</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-warning">⚠ Tồn thấp</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td><img src="/img/13.jpg" width="60" class="img-thumbnail"></td>
+                        <td>Hoa hướng dương cao cấp</td>
+                        <td>
+                            <span class="badge badge-success">45</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">✔ Ổn định</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>4</td>
+                        <td><img src="/img/15.jpg" width="60" class="img-thumbnail"></td>
+                        <td>Hoa mẫu mới</td>
+                        <td>
+                            <span class="badge badge-success">60</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">✔ Còn nhiều</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer text-muted small">
+            Hệ thống tự động cảnh báo khi tồn kho dưới 10 sản phẩm
+        </div>
+    </div>
+
+
+
 </div>
-<!-- /.container-fluid -->
+
+<!-- ===== CHART JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'line',
+        data: {
+            labels: ['T1','T2','T3','T4','T5','T6'],
+            datasets: [{
+                label: 'Doanh thu (triệu VNĐ)',
+                data: [15, 22, 18, 30, 45, 60],
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('orderStatusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Chờ xử lý', 'Hoàn thành', 'Đã huỷ'],
+            datasets: [{
+                data: [12, 30, 5]
+            }]
+        }
+    });
+</script>
+

@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin/quanlyloaihoa">Quản lý loại hoa</a>
+        </li>
+        <li class="breadcrumb-item active">Sửa loại hoa</li>
+    </ol>
+
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>Sửa loại hoa</h4>
+        </div>
+
+        <div class="card-body">
+            <form action="/admin/quanlyloaihoa/edit/{{category._id}}?_method=PUT" method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">Tên loại hoa</label>
+                    <input
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            value="{{category.name}}"
+                            required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mô tả</label>
+                    <textarea
+                            name="description"
+                            class="form-control"
+                            rows="3"
+                    >{{category.description}}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ngày tạo</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            value="{{category.createdAt}}"
+                            disabled
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Lưu thay đổi
+                </button>
+
+                <a href="/admin/quanlyloaihoa" class="btn btn-secondary">
+                    Huỷ
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

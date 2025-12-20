@@ -1803,3 +1803,26 @@ footer {
     font-family: 'Playfair Display', serif;
     font-size:1rem;
 }
+/*Dashboard*/
+.text-gray-300 {
+    color: #d1d3e2;
+}
+/*quanlydonhang*/
+.table td, .table th {
+    vertical-align: middle;
+}
+/*khachhang*/
+.table td,
+.table th {
+    vertical-align: middle;
+}
+label {
+    font-weight: 600;
+}
+/*index admin*/
+.card {
+    border-radius: 12px;
+}
+.text-gray-300 {
+    color: #d1d3e2;
+}

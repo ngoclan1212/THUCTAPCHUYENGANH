@@ -1,0 +1,96 @@
+<div class="container-fluid">
+
+    <!-- ===== BREADCRUMB ===== -->
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/khachhang">Quản lý khách hàng</a>
+        </li>
+        <li class="breadcrumb-item active">Sửa khách hàng</li>
+    </ol>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="mb-4">
+        <h3 class="mb-0">✏️ Sửa thông tin khách hàng</h3>
+        <small class="text-muted">Cập nhật thông tin khách hàng</small>
+    </div>
+
+    <!-- ===== FORM CARD ===== -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-warning text-white">
+            <i class="fa fa-edit"></i> Thông tin khách hàng
+        </div>
+
+        <div class="card-body">
+            <form action="/admin/khachhang/edit/{{user._id}}?_method=PUT" method="POST">
+
+            <!-- NAME -->
+                <div class="form-group">
+                    <label>Họ tên khách hàng</label>
+                    <input type="text"
+                           class="form-control"
+                           name="name"
+                           value="{{user.name}}"
+                           required>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email"
+                           class="form-control"
+                           name="email"
+                           value="{{user.email}}"
+                           required>
+                </div>
+
+                <!-- PHONE -->
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text"
+                           class="form-control"
+                           name="phone"
+                           value="{{user.phone}}">
+                </div>
+
+                <!-- STATUS -->
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="isActive" class="form-control">
+                        <option value="true" {{#if user.isActive}}selected{{/if}}>
+                            Hoạt động
+                        </option>
+                        <option value="false" {{#unless user.isActive}}selected{{/unless}}>
+                            Bị khoá
+                        </option>
+                    </select>
+                </div>
+
+                <!-- CREATED DATE -->
+                <div class="form-group">
+                    <label>Ngày đăng ký</label>
+                    <input type="text"
+                           class="form-control"
+                           value="{{user.createdAt}}"
+                           disabled>
+                </div>
+
+                <!-- BUTTON -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fa fa-save"></i> Lưu thay đổi
+                    </button>
+
+                    <a href="/admin/khachhang" class="btn btn-secondary ml-2">
+                        Quay lại
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+

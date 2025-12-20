@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 const { engine } = require('express-handlebars');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -12,6 +13,7 @@ app.engine(
     'hbs',
     engine( {
         extname: '.hbs',
+
         defaultLayout: 'layouts',
         partialsDir: path.join(__dirname, 'views', 'partials'),
         layoutsDir: path.join(__dirname, 'views', 'layouts')
@@ -25,6 +27,8 @@ app.use(session({
     saveUninitialized: true,
     // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
 }));
+//methor override
+app.use(methodOverride('_method'));
 app.use(flash());
 //PASSPORT
 app.use(passport.initialize());
@@ -39,9 +43,16 @@ app.use((req, res, next) => {
     res.locals.errors = req.flash('errors');
     next();
 });
+
 var indexRouter = require('./routes/index');
+var quanlyloaihoaRouter = require('./routes/quanlyloaihoa');
+var quanlydonhangRouter = require('./routes/quanlydonhang');
+var KhachHangRouter = require('./routes/KhachHang');
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
+var categoryRouter = require('./routes/category');
+
+
 console.log(path.join(__dirname, 'views', 'layouts'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +68,10 @@ app.use(express.static('public'));
 
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
+app.use('/admin/category', categoryRouter);
+app.use('/admin/quanlyloaihoa', quanlyloaihoaRouter);
+app.use('/admin/quanlydonhang', quanlydonhangRouter);
+app.use('/admin/KhachHang', KhachHangRouter);
 app.use('/users', usersRouter);
 
 //var shopRouter = require('./routes/shop');
@@ -173,10 +188,6 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
