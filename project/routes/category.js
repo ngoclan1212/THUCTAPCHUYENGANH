@@ -20,14 +20,29 @@ router.all('/*', (req, res, next) => {
 //     res.app.locals.layout = 'admin';
 //     next();
 // });
+// router.get('/', function(req, res) {
+//     Category.find({})
+//         .then(items => {
+//             const data = items.map((item, index) => ({
+//                 ...item.toObject(),
+//                 stt: index + 1
+//             }));
+//
+//             res.render('admin/category/category-list', { categories: data });
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.send('Error loading category');
+//         });
+// });
 router.get('/', function(req, res) {
-    Category.find({})
-        .then(categories => {
-            const data = categories.map((cat, index) => ({
-                ...cat.toObject(),
-                stt: index + 1, //tao stt
+    // Thêm .lean() ở đây
+    Category.find({}).lean()
+        .then(items => {
+            const data = items.map((item, index) => ({
+                ...item,
+                stt: index + 1
             }));
-
             res.render('admin/category/category-list', { categories: data });
         })
         .catch(err => {
@@ -44,13 +59,23 @@ router.get('/create', function(req, res) {
 });
 
 router.post('/create', function(req, res) {
-    const newCategory = new Category({
+    // const newCategory = new Category({
+    //     name: req.body.name,
+    //     image: req.body.image.trim(),
+    //     status: req.body.status === 'true'
+    // });
+    //
+    // newCategory.save()
+    //     .then(() => res.redirect('/admin/category'))
+    //     .catch(err => res.send(err));
+    const item = new Category({
         name: req.body.name,
-        image: req.body.image.trim(),
-        status: req.body.status === 'true'
+        image: req.body.image,
+        price: req.body.price,
+        category: req.body.category
     });
 
-    newCategory.save()
+    item.save()
         .then(() => res.redirect('/admin/category'))
         .catch(err => res.send(err));
 });
@@ -60,16 +85,29 @@ router.get('/edit/:id', function(req, res) {
             {title: 'Edit Category', category: category.toObject()});
     })
 });
+// router.put('/edit/:id', function(req, res) {
+//     Category.findOne({_id: req.params.id}).then((category) => {
+//         category.name = req.body.name;
+//         category.image = req.body.image.trim();
+//         category.status = req.body.status === 'true';
+//         category.save().then ( savecategory => {
+//             res.redirect('/admin/category');
+//         })
+//     })
+// });
 router.put('/edit/:id', function(req, res) {
-    Category.findOne({_id: req.params.id}).then((category) => {
+    Category.findById(req.params.id).then(category => {
         category.name = req.body.name;
-        category.image = req.body.image.trim();
-        category.status = req.body.status === 'true';
-        category.save().then ( savecategory => {
+        category.image = req.body.image;
+        category.price = req.body.price;
+        category.category = req.body.category;
+
+        category.save().then(() => {
             res.redirect('/admin/category');
-        })
-    })
+        });
+    });
 });
+
 router.delete('/:id', async (req, res) => {
     try {
         await Category.findByIdAndDelete(req.params.id);

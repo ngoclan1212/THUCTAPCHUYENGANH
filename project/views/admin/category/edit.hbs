@@ -10,35 +10,33 @@
                 <div class="card-body border-0">
                     <form action="/admin/category/edit/{{category._id}}?_method=PUT" method="POST">
 
-                        <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input name="name" value="{{category.name}}" type="text" class="form-control" id="name">
+                            <label class="form-label">Tên Hoa</label>
+                            <input name="name" value="{{category.name}}" type="text" class="form-control">
                         </div>
 
-                        <!-- Image -->
                         <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input name="image" value="{{category.image}}" type="text" class="form-control" id="image">
+                            <label class="form-label">Hình ảnh</label>
+                            <input name="image" value="{{category.image}}" type="text" class="form-control">
                         </div>
 
-                        <!-- Status -->
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" class="form-control" id="status">
-                                {{#if category.status}}
-                                    <option value="true" selected>Active</option>
-                                    <option value="false" >Inactive</option>
-                                {{else}}
-                                    <option value="true" >Active</option>
-                                    <option value="false" selected>Inactive</option>
-                                {{/if}}
+                            <label class="form-label">Giá</label>
+                            <input name="price" value="{{category.price}}" type="number" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Danh mục</label>
+                            <select name="category" class="form-control">
+                                <option value="bohoa" {{#if (eq category.category "bohoa")}}selected{{/if}}>Bó Hoa</option>
+                                <option value="giohoa" {{#if (eq category.category "giohoa")}}selected{{/if}}>Giỏ Hoa</option>
+                                <option value="top" {{#if (eq category.category "top")}}selected{{/if}}>Top Bán Chạy</option>
                             </select>
                         </div>
-                        <!-- Buttons -->
-                        <button type="submit" class="btn btn-primary">Edit A Category</button>
 
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </form>
+
                 </div>
 
             </div>

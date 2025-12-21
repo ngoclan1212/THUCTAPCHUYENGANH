@@ -6,29 +6,44 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Stt</th>
-        <th scope="col">Name</th>
-        <th scope="col">Image</th>
-        <th scope="col">Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
+        <th>STT</th>
+        <th>Tên hoa</th>
+        <th>Hình ảnh</th>
+        <th>Giá</th>
+        <th>Danh mục</th>
+        <th>Sửa</th>
+        <th>Xóa</th>
     </tr>
     </thead>
     <tbody class="table-group-divider">
     {{#each categories}}
         <tr>
             <th scope="row">{{stt}}</th>
+
             <td>{{name}}</td>
-            <td><img src="{{image}}" alt="" class="img-thumbnail" width="100"> </td>
-            <td>{{status}}</td>
+
+            {{!-- Sửa từ /uploads/ thành /img/ --}}
+            <td>
+                <img src="/img/{{image}}" alt="{{name}}" class="img-thumbnail" width="100">
+            </td>
+
+            <td>{{formatCurrency price}} ₫</td>
+
+            <td>
+                {{#if (eq category "bohoa")}}Bó Hoa{{/if}}
+                {{#if (eq category "giohoa")}}Giỏ Hoa{{/if}}
+                {{#if (eq category "top")}}Top Bán Chạy{{/if}}
+            </td>
+
             <td>
                 <a href="/admin/category/edit/{{_id}}">
                     <i class="fa-solid fa-pen-to-square text-warning"></i>
                 </a>
             </td>
+
             <td>
                 <form action="/admin/category/{{_id}}?_method=DELETE" method="post">
-                    <button type="submit" class="border-0">
+                    <button type="submit" class="border-0 bg-transparent">
                         <i class="fa-solid fa-trash-alt text-danger"></i>
                     </button>
                 </form>
@@ -36,5 +51,7 @@
         </tr>
     {{/each}}
     </tbody>
+
+
 
 </table>

@@ -17,24 +17,40 @@
 
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Tên Hoa</label>
                             <input name="name" type="text" class="form-control" id="name">
                         </div>
 
                         <!-- Image -->
                         <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
+                            <label for="image" class="form-label">Hình ảnh</label>
                             <input name="image" type="text" class="form-control" id="image">
                         </div>
 
-                        <!-- Status -->
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" class="form-control" id="status">
-                                <option value="false" selected>Inactive</option>
-                                <option value="true">Active</option>
+                            <label>Giá</label>
+                            <input name="price" type="number" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Danh mục</label>
+                            <select name="category" class="form-control">
+                                <option value="bohoa">Bó Hoa</option>
+                                <option value="giohoa">Giỏ Hoa</option>
+                                <option value="top">Top Bán Chạy</option>
                             </select>
                         </div>
+
+
+                        <!-- Status -->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="status" class="form-label">Status</label>-->
+<!--                            <select name="status" class="form-control" id="status">-->
+<!--                                <option value="false" selected>Inactive</option>-->
+<!--                                <option value="true">Active</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
                         <!-- Buttons -->
                         <button type="submit" class="btn btn-primary">Add A Category</button>
 

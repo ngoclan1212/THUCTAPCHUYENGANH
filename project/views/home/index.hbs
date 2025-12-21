@@ -35,287 +35,77 @@
     </div>
 </section>
 
-<!-- Products -->
+<!--Product-->
 <section id="products">
     <div class="container mt-5 mb-5">
 
         <h2 class="section-title text-center">Sản phẩm nổi bật</h2>
 
-        <!-- BÓ HOA -->
         <h3 class="sub-title">Bó Hoa</h3>
         <div class="product-grid">
-            <div class="card-product">
-                <img src="/img/1.jpg" alt="Hoa hướng dương">
-                <h5>Hoa hướng dương</h5>
-                <p class="price">200.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa cẩm tú cầu"
-                        data-price="200000"
-                        data-img="/img/1.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/10.jpg" alt="Hoa cẩm tú cầu">
-                <h5>Hoa cẩm tú cầu</h5>
-                <p class="price">400.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="400000"
-                        data-img="/img/10.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/8.jpg" alt="Hoa tulip trắng">
-                <h5>Hoa tulip trắng</h5>
-                <p class="price">350.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="350000"
-                        data-img="/img/8.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/2.jpg" alt="Hoa hồng đỏ">
-                <h5>Hoa hồng đỏ</h5>
-                <p class="price">250.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="250000"
-                        data-img="/img/2.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/3.jpg" alt="Hoa hồng trắng">
-                <h5>Hoa hồng trắng</h5>
-                <p class="price">300.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="300000"
-                        data-img="/img/3.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/17.jpg" alt="Bó hoa 75413">
-                <h5>Bó Hoa 75413</h5>
-                <p class="price">600.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="600000"
-                        data-img="/img/17.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/18.jpg" alt="Bó hoa 81345">
-                <h5>Bó Hoa 81345</h5>
-                <p class="price">600.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="600000"
-                        data-img="/img/18.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/16.jpg" alt="Bó hoa 12049">
-                <h5>Bó Hoa 12049</h5>
-                <p class="price">700.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="700000"
-                        data-img="/img/16.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/15.jpg" alt="Hoa mẫu mới">
-                <h5>Hoa mẫu mới</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/15.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/13.jpg" alt="Hoa hướng dương cao cấp">
-                <h5>Hoa hướng dương cao cấp</h5>
-                <p class="price">350.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="350000"
-                        data-img="/img/13.jpg">Thêm vào giỏ</button>
-            </div>
+            {{#if bohoa.length}}
+                {{#each bohoa}}
+                    <div class="card-product">
+                        <img src="/img/{{image}}" alt="{{name}}">
+                        <h5>{{name}}</h5>
+                        <p class="price">{{formatCurrency price}}₫</p>
+                        <button class="btn-add-cart"
+                                data-name="{{name}}"
+                                data-price="{{price}}"
+                                data-img="/img/{{image}}">
+                            Thêm vào giỏ
+                        </button>
+                    </div>
+                {{/each}}
+            {{else}}
+                <p class="text-center">Chưa có sản phẩm Bó Hoa</p>
+            {{/if}}
         </div>
 
-        <!-- GIỎ HOA -->
         <h3 class="sub-title">Giỏ Hoa</h3>
         <div class="product-grid">
-            <div class="card-product">
-                <img src="/img/19.jpg" alt="Giỏ Hoa 81346">
-                <h5>Giỏ Hoa 81346</h5>
-                <p class="price">600.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="600000"
-                        data-img="/img/19.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/20.jpg" alt="Giỏ Hoa 81347">
-                <h5>Giỏ Hoa 81347</h5>
-                <p class="price">450.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="450000"
-                        data-img="/img/20.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/21.jpg" alt="Giỏ Hoa 81348">
-                <h5>Giỏ Hoa 81348</h5>
-                <p class="price">550.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="550000"
-                        data-img="/img/21.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/22.jpg" alt="Giỏ Hoa 81349">
-                <h5>Giỏ Hoa 81349</h5>
-                <p class="price">550.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="550000"
-                        data-img="/img/22.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/23.jpg" alt="Giỏ Hoa 81350">
-                <h5>Giỏ Hoa 81350</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="550000"
-                        data-img="/img/23.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/4.jpg" alt="Giỏ Hoa 81351">
-                <h5>Giỏ Hoa 81351</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/4.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/5.jpg" alt="Giỏ Hoa 81352">
-                <h5>Giỏ Hoa 81352</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/5.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/24.jpg" alt="Giỏ Hoa Sen Đá">
-                <h5>Giỏ Hoa Sen Đá</h5>
-                <p class="price">600.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="600000"
-                        data-img="/img/24.jpg">Thêm vào giỏ</button>
-            </div>
+            {{#if giohoa.length}}
+                {{#each giohoa}}
+                    <div class="card-product">
+                        <img src="/img/{{image}}" alt="{{name}}">
+                        <h5>{{name}}</h5>
+                        <p class="price">{{formatCurrency price}}₫</p>
+                        <button class="btn-add-cart"
+                                data-name="{{name}}"
+                                data-price="{{price}}"
+                                data-img="/img/{{image}}">
+                            Thêm vào giỏ
+                        </button>
+                    </div>
+                {{/each}}
+            {{else}}
+                <p class="text-center">Chưa có sản phẩm Giỏ Hoa</p>
+            {{/if}}
         </div>
 
-        <!-- GIỎ HOA -->
         <h3 class="sub-title">Top Các Sản Phẩm Bán Chạy</h3>
         <div class="product-grid">
-            <div class="card-product">
-                <img src="/img/15.jpg" alt="Hoa mẫu mới">
-                <h5>Hoa mẫu mới</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/15.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/17.jpg" alt="Bó hoa 75413">
-                <h5>Bó Hoa 75413</h5>
-                <p class="price">600.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="600000"
-                        data-img="/img/17.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/2.jpg" alt="Hoa hồng đỏ">
-                <h5>Hoa hồng đỏ</h5>
-                <p class="price">250.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="250000"
-                        data-img="/img/2.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/13.jpg" alt="Hoa hướng dương cao cấp">
-                <h5>Hoa hướng dương cao cấp</h5>
-                <p class="price">350.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="350000"
-                        data-img="/img/13.jpg">Thêm vào giỏ</button>
-            </div>
-
-
-            <div class="card-product">
-                <img src="/img/22.jpg" alt="Giỏ Hoa 81349">
-                <h5>Giỏ Hoa 81349</h5>
-                <p class="price">550.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="550000"
-                        data-img="/img/22.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/4.jpg" alt="Giỏ Hoa 81351">
-                <h5>Giỏ Hoa 81351</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/4.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/5.jpg" alt="Giỏ Hoa 81352">
-                <h5>Giỏ Hoa 81352</h5>
-                <p class="price">500.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="500000"
-                        data-img="/img/5.jpg">Thêm vào giỏ</button>
-            </div>
-
-            <div class="card-product">
-                <img src="/img/20.jpg" alt="Giỏ Hoa 81347">
-                <h5>Giỏ Hoa 81347</h5>
-                <p class="price">450.000₫</p>
-                <button class="btn-add-cart"
-                        data-name="Hoa hướng dương"
-                        data-price="450000"
-                        data-img="/img/20.jpg">Thêm vào giỏ</button>
-            </div>
+            {{#if top.length}}
+                {{#each top}}
+                    <div class="card-product">
+                        <img src="/img/{{image}}" alt="{{name}}">
+                        <h5>{{name}}</h5>
+                        <p class="price">{{formatCurrency price}}₫</p>
+                        <button class="btn-add-cart"
+                                data-name="{{name}}"
+                                data-price="{{price}}"
+                                data-img="/img/{{image}}">
+                            Thêm vào giỏ
+                        </button>
+                    </div>
+                {{/each}}
+            {{else}}
+                <p class="text-center">Chưa có sản phẩm Top Bán Chạy</p>
+            {{/if}}
         </div>
+
     </div>
 
-    <!-- Thông báo giỏ hàng -->
     <div id="cart-message">Đã thêm vào giỏ hàng</div>
 </section>
 

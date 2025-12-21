@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
+const Category = require('../models/category');
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -10,16 +11,62 @@ router.all('/*', function(req,
     next();
 })
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('home/index', { title: 'Express' });
+// router.get('/', async function(req, res, next) {
+//     const bohoa = await Category.find({ category: 'bohoa' });
+//     const loaihoa = await Category.find({ category: 'loaihoa' });
+//     const top = await Category.find({ category: 'top' });
+//     res.render('home/index', {
+//         bohoa,
+//         loaihoa,
+//         top });
+// });
+router.get('/', async function(req, res, next) {
+    try {
+        // Thêm .lean() vào cuối mỗi truy vấn find
+        const bohoa = await Category.find({ category: 'bohoa' }).lean();
+        const giohoa = await Category.find({ category: 'giohoa' }).lean();
+        const top = await Category.find({ category: 'top' }).lean();
+
+        // Kiểm tra log xem dữ liệu có lấy được từ DB không
+        console.log("Số lượng Bó hoa:", bohoa.length);
+        console.log("Số lượng Giỏ hoa:", giohoa.length);
+
+        res.render('home/index', {
+            bohoa: bohoa,
+            giohoa: giohoa,
+            top: top
+        });
+    } catch (err) {
+        console.error("Lỗi lấy dữ liệu Home:", err);
+        next(err);
+    }
 });
+
 
 router.get('/pages', function(req, res, next) {
     res.render('layouts/pages', { title: 'Trang' });
 });
 
-router.get('/shop', function(req, res, next) {
-    res.render('home/shop', { title: 'Cửa hàng' });
+router.get('/shop', async (req, res) => {
+    try {
+        // Sử dụng Category (model bạn đang dùng chung cho sản phẩm)
+        // Dùng .lean() để Handlebars có thể đọc dữ liệu dễ dàng
+        const bohoa = await Category.find({ category: 'bohoa' }).lean();
+        const giohoa = await Category.find({ category: 'giohoa' }).lean();
+
+        // Log ra terminal để kiểm tra dữ liệu
+        console.log("Shop - Bó hoa:", bohoa.length);
+        console.log("Shop - Giỏ hoa:", giohoa.length);
+
+        res.render('home/shop', {
+            bohoa: bohoa,
+            giohoa: giohoa,
+            top: topbanchay
+        });
+    } catch (err) {
+        console.error("Lỗi chi tiết tại Shop:", err);
+        res.status(500).send("Lỗi tải dữ liệu shop: " + err.message);
+    }
 });
 
 router.get('/contact', function(req, res, next) {

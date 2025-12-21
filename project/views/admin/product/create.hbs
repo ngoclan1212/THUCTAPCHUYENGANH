@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>Thêm sản phẩm hoa mới</h3>
+        </div>
+        <div class="card-body">
+            <form action="/admin/product/create" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Tên hoa</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Giá tiền</label>
+                    <input type="number" name="price" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Link hình ảnh</label>
+                    <input type="text" name="image" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Chọn danh mục</label>
+                    <select name="category" class="form-select">
+                        {{#each categories}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select name="status" class="form-select">
+                        <option value="true">Hiển thị</option>
+                        <option value="false">Ẩn</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">Lưu sản phẩm</button>
+                <a href="/admin/product" class="btn btn-secondary">Quay lại</a>
+            </form>
+        </div>
+    </div>
+</div>
