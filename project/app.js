@@ -69,7 +69,6 @@
     var indexRouter = require('./routes/index');
     var quanlyloaihoaRouter = require('./routes/quanlyloaihoa');
     var quanlydonhangRouter = require('./routes/quanlydonhang');
-    var KhachHangRouter = require('./routes/KhachHang');
     var adminRouter = require('./routes/admin');
     var usersRouter = require('./routes/users');
     var categoryRouter = require('./routes/category');
@@ -94,8 +93,9 @@
     app.use('/admin/product', productRouter);
     app.use('/admin/quanlyloaihoa', quanlyloaihoaRouter);
     app.use('/admin/quanlydonhang', quanlydonhangRouter);
-    app.use('/admin/KhachHang', KhachHangRouter);
-    app.use('/users', usersRouter);
+    app.use('/admin/user', usersRouter);          // canonical path used by views
+    app.use('/admin/KhachHang', usersRouter);     // optional alias for legacy links
+    app.get('/admin/KhachHang', (req, res) => res.redirect('/admin/user'));
 
     //var shopRouter = require('./routes/shop');
     const mongoose = require('mongoose');
@@ -175,7 +175,12 @@
             const newUser = new User();
             newUser.email = req.body.email;
             newUser.password = req.body.password;
-            bcryptjs.genSalt(10, function (err, salt) {
+            newUser.firstName = req.body.firstName;
+            newUser.lastName  = req.body.lastName;
+            newUser.email     = req.body.email;
+            newUser.password  = req.body.password;
+
+        bcryptjs.genSalt(10, function (err, salt) {
                 bcryptjs.hash(newUser.password, salt, function (err, hash) {
                     if (err) {return  err}
                     newUser.password = hash;
@@ -191,18 +196,18 @@
         }
     );
 
-    // app.get('/logout', (req, res) => {
-    //     req.session.destroy(err => {
-    //         if (err) {
-    //             console.error(err);
-    //             return res.redirect('/'); // nếu lỗi vẫn redirect về trang chính
-    //         }
-    //         // Xóa cookie session
-    //         res.clearCookie('connect.sid');
-    //         // Sau đó redirect về login
-    //         res.redirect('/login');
-    //     });
-    // });
+    app.get('/logout', (req, res) => {
+        req.session.destroy(err => {
+            if (err) {
+                console.error(err);
+                return res.redirect('/'); // nếu lỗi vẫn redirect về trang chính
+            }
+            // Xóa cookie session
+            res.clearCookie('connect.sid');
+            // Sau đó redirect về login
+            res.redirect('/login');
+        });
+    });
 
     // view engine setup
 

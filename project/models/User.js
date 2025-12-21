@@ -33,6 +33,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         minlength: 5,
+    },
+    isActive: {
+        type: Boolean,
+        default: true
     }
 });
 //const User = mongoose.model('User', userSchema);
