@@ -1,149 +1,73 @@
 <div class="container-fluid">
-
-    <!-- ===== BREADCRUMB ===== -->
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Quản lý đơn hàng</li>
-    </ol>
-
-    <!-- ===== HEADER ===== -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="mb-0">📦 Quản lý đơn hàng</h3>
-            <small class="text-muted">
-                Theo dõi & xử lý các đơn hàng trong hệ thống
-            </small>
-        </div>
-        <span class="badge badge-info p-2">
-            Tổng: {{orders.length}} đơn
-        </span>
+        <h2 class="font-weight-bold">Quản Lý Đơn Hàng</h2>
     </div>
 
-    <!-- ===== FILTER BAR ===== -->
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <form class="form-inline">
-                <input type="text" class="form-control mr-2 mb-2"
-                       placeholder="🔍 Mã đơn / Tên khách hàng">
-
-                <select class="form-control mr-2 mb-2">
-                    <option value="">-- Trạng thái --</option>
-                    <option value="pending">Chờ xử lý</option>
-                    <option value="completed">Hoàn thành</option>
-                    <option value="cancelled">Đã huỷ</option>
-                </select>
-
-                <button class="btn btn-primary mb-2">
-                    Lọc
-                </button>
-            </form>
-        </div>
+    <div class="mb-4">
+        <a href="/admin/quanlydonhang" class="btn btn-primary">Tất cả</a>
+        <a href="/admin/quanlydonhang?status=pending" class="btn btn-light shadow-sm">Đang chờ</a>
+        <a href="/admin/quanlydonhang?status=completed" class="btn btn-light shadow-sm">Hoàn thành</a>
+        <a href="/admin/quanlydonhang?status=cancelled" class="btn btn-light shadow-sm">Hủy</a>
     </div>
 
-    <!-- ===== ORDER TABLE ===== -->
-    <div class="card shadow">
-        <div class="card-header">
-            <i class="fa fa-table"></i> Danh sách đơn hàng
-        </div>
-
-        <div class="card-body table-responsive">
+    <div class="card shadow border-0">
+        <div class="table-responsive">
             <table class="table table-hover align-middle">
-                <thead class="thead-dark">
+                <thead class="bg-light">
                 <tr>
-                    <th>#</th>
-                    <th>Mã đơn</th>
-                    <th>Khách hàng</th>
-                    <th>Ngày đặt</th>
-                    <th>Tổng tiền</th>
-                    <th>Trạng thái</th>
-                    <th class="text-center">Thao tác</th>
+                    <th>ID</th>
+                    <th>EMAIL / KHÁCH HÀNG</th>
+                    <th>TỔNG TIỀN</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>NGÀY TẠO</th>
+                    <th>THAO TÁC</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                {{#if orders.length}}
-                    {{#each orders}}
-                        <tr>
-                            <td>{{@index}}</td>
-
-                            <td>
-                                <span class="badge badge-light">
-                                    {{this._id}}
-                                </span>
-                            </td>
-
-                            <td>
-                                <strong>{{this.user.name}}</strong><br>
-                                <small class="text-muted">
-                                    {{this.user.email}}
-                                </small>
-                            </td>
-
-                            <td>
-                                {{this.createdAt}}
-                            </td>
-
-                            <td>
-                                <strong class="text-danger">
-                                    {{this.total}} đ
-                                </strong>
-                            </td>
-
-                            <td>
-                                {{#if (eq this.status "pending")}}
-                                    <span class="badge badge-warning">
-                                        ⏳ Chờ xử lý
-                                    </span>
-                                {{/if}}
-
-                                {{#if (eq this.status "completed")}}
-                                    <span class="badge badge-success">
-                                        ✔ Hoàn thành
-                                    </span>
-                                {{/if}}
-
-                                {{#if (eq this.status "cancelled")}}
-                                    <span class="badge badge-danger">
-                                        ✖ Đã huỷ
-                                    </span>
-                                {{/if}}
-                            </td>
-
-                            <td class="text-center">
-                                <a href="/admin/quanlydonhang/{{this._id}}"
-                                   class="btn btn-sm btn-outline-info"
-                                   title="Xem chi tiết">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-
-                                <a href="/admin/quanlydonhang/edit/{{this._id}}"
-                                   class="btn btn-sm btn-outline-warning"
-                                   title="Cập nhật trạng thái">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-
-                                <a href="/admin/quanlydonhang/delete/{{this._id}}"
-                                   onclick="return confirm('Bạn có chắc muốn xoá đơn hàng này?')"
-                                   class="btn btn-sm btn-outline-danger"
-                                   title="Xoá đơn">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {{/each}}
-                {{else}}
+                {{#each orders}}
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
-                            😴 Chưa có đơn hàng nào
+                        <td>#{{sliceId this._id}}</td>
+                        <td>
+                            <div class="font-weight-bold">{{this.user.email}}</div>
+                            <small class="text-muted">{{this.user.name}}</small>
+                        </td>
+                        <td class="font-weight-bold">{{this.total}}₫</td>
+                        <td>
+                            {{#if (eq this.status "pending")}}
+                                <span class="badge badge-warning text-uppercase">Pending</span>
+                            {{/if}}
+                            {{#if (eq this.status "completed")}}
+                                <span class="badge badge-success text-uppercase">Completed</span>
+                            {{/if}}
+                            {{#if (eq this.status "cancelled")}}
+                                <span class="badge badge-danger text-uppercase">Cancelled</span>
+                            {{/if}}
+                        </td>
+                        <td>{{formatDate this.createdAt}}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {{#if (eq this.status "pending")}}
+                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="mr-1">
+                                        <input type="hidden" name="status" value="completed">
+                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+                                    </form>
+                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="mr-1">
+                                        <input type="hidden" name="status" value="cancelled">
+                                        <button class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                    </form>
+                                {{/if}}
+
+                                <a href="/admin/quanlydonhang/edit/{{this._id}}" class="btn btn-info btn-sm mr-1">Chi tiết</a>
+
+                                <form action="/admin/quanlydonhang/delete/{{this._id}}" method="POST" onsubmit="return confirm('Xóa đơn hàng này?')">
+                                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
-                {{/if}}
+                {{/each}}
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
-

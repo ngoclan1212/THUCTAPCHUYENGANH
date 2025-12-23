@@ -1,112 +1,250 @@
-<div class="cart-container">
-    <h2>Giỏ hàng của bạn</h2>
+<!--<div class="cart-container">-->
+<!--    <h2>Giỏ hàng của bạn</h2>-->
 
-    <div id="cart-list"></div>
+<!--    <div id="cart-list"></div>-->
 
-    <button class="btn-cart btn-order" id="btn-order">Đặt hàng</button>
-    <button class="btn-cart btn-back" onclick="window.location.href='/shop'">← Quay lại shop</button>
+<!--    <button class="btn-cart btn-order" id="btn-order">Đặt hàng</button>-->
+<!--    <button class="btn-cart btn-back" onclick="window.location.href='layouts/shop'">← Quay lại shop</button>-->
 
-    <div id="order-message">Sản phẩm đã được đặt, đang chờ xác nhận!</div>
+<!--    <div id="order-message">Sản phẩm đã được đặt, đang chờ xác nhận!</div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const cartList = document.getElementById("cart-list");-->
+<!--    const btnOrder = document.getElementById("btn-order");-->
+<!--    const orderMessage = document.getElementById("order-message");-->
+
+<!--    let cart = JSON.parse(localStorage.getItem('cart')) || [];-->
+
+<!--    function saveCart() {-->
+<!--        localStorage.setItem('cart', JSON.stringify(cart));-->
+<!--    }-->
+
+<!--    function attachEvents() {-->
+<!--        document.querySelectorAll('.btn-delete').forEach(btn => {-->
+<!--            btn.addEventListener('click', () => {-->
+<!--                const index = btn.dataset.index;-->
+<!--                cart.splice(index, 1);-->
+<!--                saveCart();-->
+<!--                renderCart();-->
+<!--            });-->
+<!--        });-->
+
+<!--        document.querySelectorAll('.increase').forEach(btn => {-->
+<!--            btn.addEventListener('click', () => {-->
+<!--                const index = btn.dataset.index;-->
+<!--                cart[index].qty += 1;-->
+<!--                saveCart();-->
+<!--                renderCart();-->
+<!--            });-->
+<!--        });-->
+
+<!--        document.querySelectorAll('.decrease').forEach(btn => {-->
+<!--            btn.addEventListener('click', () => {-->
+<!--                const index = btn.dataset.index;-->
+<!--                if (cart[index].qty > 1) {-->
+<!--                    cart[index].qty -= 1;-->
+<!--                    saveCart();-->
+<!--                    renderCart();-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+
+<!--    function renderCart() {-->
+<!--        if (cart.length === 0) {-->
+<!--            cartList.innerHTML = "<p>Giỏ hàng đang trống.</p>";-->
+<!--            return;-->
+<!--        }-->
+
+<!--        cartList.innerHTML = "";-->
+<!--        let totalAll = 0;-->
+
+<!--        cart.forEach((item, index) => {-->
+<!--            const totalPrice = item.price * item.qty;-->
+<!--            totalAll += totalPrice;-->
+
+<!--            cartList.innerHTML += `-->
+<!--                <div class="cart-item">-->
+<!--                    <img src="${item.img}" alt="${item.name}">-->
+<!--                    <div class="cart-info">-->
+<!--                        <h4>${item.name}</h4>-->
+<!--                        <p class="cart-price">Giá: ${Number(item.price).toLocaleString()}₫</p>-->
+
+<!--                        <div class="quantity-control">-->
+<!--                            <button class="decrease" data-index="${index}">-</button>-->
+<!--                            <span>${item.qty}</span>-->
+<!--                            <button class="increase" data-index="${index}">+</button>-->
+<!--                        </div>-->
+
+<!--                        <p class="cart-price">Tổng: ${totalPrice.toLocaleString()}₫</p>-->
+<!--                    </div>-->
+
+<!--                    <button class="btn-cart btn-delete" data-index="${index}">Xóa</button>-->
+<!--                </div>-->
+<!--            `;-->
+<!--        });-->
+
+<!--        cartList.innerHTML += `-->
+<!--            <h3 style="text-align:right;margin-top:20px;font-family:'Playfair Display';">-->
+<!--                Tổng đơn hàng: ${totalAll.toLocaleString()}₫-->
+<!--            </h3>-->
+<!--        `;-->
+
+<!--        attachEvents();-->
+<!--    }-->
+
+<!--    renderCart();-->
+
+<!--    btnOrder.addEventListener('click', () => {-->
+<!--        if (cart.length === 0) {-->
+<!--            alert("Giỏ hàng đang trống!");-->
+<!--            return;-->
+<!--        }-->
+
+<!--        orderMessage.style.display = 'block';-->
+<!--        setTimeout(() => { orderMessage.style.display = 'none'; }, 2500);-->
+
+<!--        localStorage.removeItem('cart');-->
+<!--        cart = [];-->
+<!--        renderCart();-->
+<!--    });-->
+<!--</script>-->
+<div class="cart-page-header">
+    <h2 class="main-cart-title">Giỏ hàng của bạn</h2>
+</div>
+
+<div class="cart-container-centered">
+    <div class="cart-wrapper">
+        <div class="cart-left">
+            <div id="cart-list">
+            </div>
+        </div>
+
+        <div class="cart-right">
+            <div class="order-summary-card">
+                <h2 class="summary-title">Đơn Hàng Của Bạn</h2>
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>Số lượng sản phẩm:</span>
+                        <span id="total-qty" class="val-bold">0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Thành Tiền:</span>
+                        <span id="sub-total" class="val-bold">0₫</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển:</span>
+                        <span class="free-ship-text">Miễn phí</span>
+                    </div>
+                    <hr class="divider">
+                    <div class="summary-row total-row">
+                        <span>Tổng cộng:</span>
+                        <span id="total-all-final" class="final-price">0₫</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-action btn-checkout" id="btn-order">Tiến Hành Thanh Toán</button>
+                    <button class="btn-action btn-clear" id="btn-clear-all">Xóa Toàn Bộ Giỏ Hàng</button>
+                    <button class="btn-action btn-back-shop" onclick="window.location.href='/shop'">Tiếp Tục Mua Sắm</button>
+                </div>
+                <div id="order-message">🎉 Đặt hàng thành công! Đang chuyển về cửa hàng...</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    const cartList = document.getElementById("cart-list");
-    const btnOrder = document.getElementById("btn-order");
-    const orderMessage = document.getElementById("order-message");
-
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    function attachEvents() {
-        document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const index = btn.dataset.index;
-                cart.splice(index, 1);
-                saveCart();
-                renderCart();
-            });
-        });
-
-        document.querySelectorAll('.increase').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const index = btn.dataset.index;
-                cart[index].qty += 1;
-                saveCart();
-                renderCart();
-            });
-        });
-
-        document.querySelectorAll('.decrease').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const index = btn.dataset.index;
-                if (cart[index].qty > 1) {
-                    cart[index].qty -= 1;
-                    saveCart();
-                    renderCart();
-                }
-            });
-        });
-    }
-
     function renderCart() {
+        const cartList = document.getElementById("cart-list");
         if (cart.length === 0) {
-            cartList.innerHTML = "<p>Giỏ hàng đang trống.</p>";
+            cartList.innerHTML = `
+                <div style="text-align:center; padding:60px; background:white; border-radius:20px; box-shadow:var(--shadow);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" width="80" style="opacity:0.2;">
+                    <h3 style="color:#888; margin-top:20px;">Giỏ hàng của bạn hiện đang trống</h3>
+                    <button class="btn-action btn-back-shop" style="width:200px; margin-top:20px;" onclick="window.location.href='/shop'">Mua sắm ngay</button>
+                </div>`;
+            updateSummary(0, 0);
             return;
         }
 
-        cartList.innerHTML = "";
-        let totalAll = 0;
+        let html = ""; let total = 0; let qty = 0;
+        cart.forEach((item, i) => {
+            const sub = item.price * item.qty;
+            total += sub; qty += item.qty;
 
-        cart.forEach((item, index) => {
-            const totalPrice = item.price * item.qty;
-            totalAll += totalPrice;
+            // Xác định loại (mặc định là Bó hoa nếu không có category)
+            const typeLabel = item.category === 'giohoa' ? 'Giỏ hoa' : 'Bó hoa';
 
-            cartList.innerHTML += `
-                <div class="cart-item">
-                    <img src="${item.img}" alt="${item.name}">
-                    <div class="cart-info">
-                        <h4>${item.name}</h4>
-                        <p class="cart-price">Giá: ${Number(item.price).toLocaleString()}₫</p>
+            html += `
+            <div class="cart-card">
+                <button class="btn-del-item" onclick="removeItem(${i})">✕</button>
+                <img src="${item.img}" alt="${item.name}">
+                <div class="card-info-box">
+                    <span class="category-badge">${typeLabel}</span>
+                    <h4 class="prod-name">${item.name}</h4>
 
-                        <div class="quantity-control">
-                            <button class="decrease" data-index="${index}">-</button>
-                            <span>${item.qty}</span>
-                            <button class="increase" data-index="${index}">+</button>
+                    <div class="qty-control-wrapper">
+                        <div class="qty-box">
+                            <button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
+                            <span style="font-weight:bold; width:25px; text-align:center;">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
                         </div>
-
-                        <p class="cart-price">Tổng: ${totalPrice.toLocaleString()}₫</p>
+                        <div class="price-details">
+                            <span class="unit-price">Đơn giá: ${Number(item.price).toLocaleString()}₫</span>
+                            <span class="subtotal-item">${sub.toLocaleString()}₫</span>
+                        </div>
                     </div>
-
-                    <button class="btn-cart btn-delete" data-index="${index}">Xóa</button>
                 </div>
-            `;
+            </div>`;
         });
+        cartList.innerHTML = html;
+        updateSummary(total, qty);
+    }
 
-        cartList.innerHTML += `
-            <h3 style="text-align:right;margin-top:20px;font-family:'Playfair Display';">
-                Tổng đơn hàng: ${totalAll.toLocaleString()}₫
-            </h3>
-        `;
+    function updateSummary(t, q) {
+        document.getElementById('total-qty').innerText = q;
+        document.getElementById('sub-total').innerText = t.toLocaleString() + '₫';
+        document.getElementById('total-all-final').innerText = t.toLocaleString() + '₫';
+    }
 
-        attachEvents();
+    window.changeQty = (i, d) => {
+        if(cart[i].qty + d > 0) { cart[i].qty += d; save(); }
+    }
+
+    window.removeItem = (i) => {
+        if(confirm("Bạn muốn xóa sản phẩm này?")) { cart.splice(i,1); save(); }
+    }
+
+    function save() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    document.getElementById('btn-clear-all').onclick = () => {
+        if(cart.length > 0 && confirm("Xóa toàn bộ giỏ hàng?")) { cart = []; save(); }
+    }
+
+    document.getElementById('btn-order').onclick = () => {
+        // 1. Kiểm tra giỏ hàng
+        if (cart.length === 0) {
+            return alert("Giỏ hàng của bạn đang trống!");
+        }
+
+        // 2. Hiệu ứng nút bấm (Tùy chọn cho đẹp)
+        const btn = document.getElementById('btn-order');
+        btn.innerHTML = "⌛ Đang chuyển sang thanh toán...";
+        btn.style.opacity = "0.7";
+
+        // 3. CHUYỂN HƯỚNG SANG TRANG BILL
+        // Lưu ý: KHÔNG dùng localStorage.removeItem('cart') ở đây.
+        setTimeout(() => {
+            window.location.href = '/thanhtoan';
+        }, 1000); // Chờ 1 giây để tạo hiệu ứng mượt mà
     }
 
     renderCart();
-
-    btnOrder.addEventListener('click', () => {
-        if (cart.length === 0) {
-            alert("Giỏ hàng đang trống!");
-            return;
-        }
-
-        orderMessage.style.display = 'block';
-        setTimeout(() => { orderMessage.style.display = 'none'; }, 2500);
-
-        localStorage.removeItem('cart');
-        cart = [];
-        renderCart();
-    });
 </script>

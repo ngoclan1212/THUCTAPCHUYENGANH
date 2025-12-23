@@ -22,11 +22,31 @@
             layoutsDir: path.join(__dirname, 'views', 'layouts'),
 
             helpers: {
+                // 1. So sánh bằng (dùng để hiển thị màu sắc trạng thái)
                 eq: function (a, b) { return a === b; },
-                toString: function (val) { return val ? val.toString() : ''; },
+
+                // 2. Định dạng tiền: 1400000 -> 1.400.000
                 formatCurrency: function (value) {
                     if (!value) return "0";
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                },
+
+                // 3. Định dạng ngày: Hiển thị Giờ:Phút Ngày/Tháng/Năm
+                formatDate: function (date) {
+                    if (!date) return "---";
+                    return new Date(date).toLocaleString('vi-VN', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                },
+
+                // 4. Cắt ID: Lấy 6 ký tự cuối cho gọn giống ảnh mẫu
+                sliceId: function (id) {
+                    if (!id) return "N/A";
+                    return id.toString().slice(-6).toUpperCase();
                 }
             }
         })
@@ -56,19 +76,11 @@
         res.locals.errors = req.flash('errors');
         next();
     });
-    // app.use((req, res, next) => {
-    //     // Passport gán user vào req.user, chúng ta đưa nó ra view qua res.locals
-    //     res.locals.user = req.user ? req.user.toObject() : (req.session.user || null);
-    //     res.locals.success_message = req.flash('success_message');
-    //     res.locals.error_message = req.flash('error_message');
-    //     res.locals.error = req.flash('error');
-    //     res.locals.errors = req.flash('errors');
-    //     next();
-    // });
 
+    var quanlydonhangRouter = require('./routes/quanlydonhang');
     var indexRouter = require('./routes/index');
     var quanlyloaihoaRouter = require('./routes/quanlyloaihoa');
-    var quanlydonhangRouter = require('./routes/quanlydonhang');
+
     var adminRouter = require('./routes/admin');
     var usersRouter = require('./routes/users');
     var categoryRouter = require('./routes/category');
@@ -87,12 +99,13 @@
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.static('public'));
 
+    app.use('/admin/quanlydonhang', quanlydonhangRouter);
     app.use('/', indexRouter);
     app.use('/admin', adminRouter);
     app.use('/admin/category', categoryRouter);
     app.use('/admin/product', productRouter);
     app.use('/admin/quanlyloaihoa', quanlyloaihoaRouter);
-    app.use('/admin/quanlydonhang', quanlydonhangRouter);
+
     app.use('/admin/user', usersRouter);          // canonical path used by views
     app.use('/admin/KhachHang', usersRouter);     // optional alias for legacy links
     app.get('/admin/KhachHang', (req, res) => res.redirect('/admin/user'));
@@ -114,61 +127,7 @@
             console.error("Error connecting to MongDB:", err);
         });
 
-    // app.post('/login', (req, res) => {
-    //     User.findOne({email: req.body.email}).then((user) => {
-    //         if (user) {
-    //             bcryptjs.compare(req.body.password,user.password,(err,matched)=>{
-    //                 if(err) return err;
-    //                 if(matched){
-    //                     //res.send("User was logged in");
-    //                     req.session.user =
-    //                         {
-    //                             id:user._id,
-    //                             email:user.email,
-    //                         };
-    //                     res.redirect('/');
-    //                 }else {
-    //                     res.send("Email hoac mat khau khong dung");
-    //                 }
-    //             });
-    //         }else{
-    //             res.send("User khong ton tai");
-    //         }
-    //     })
-    // });
-    // app.post('/sign', async (req, res) => {
-    //     try {
-    //         const { email, phone, password } = req.body;
-    //
-    //         // kiểm tra user đã tồn tại chưa
-    //         const existingUser = await User.findOne({ email });
-    //         if (existingUser) {
-    //             return res.status(400).json({ message: "Email already registered" });
-    //         }
-    //
-    //         // hash password
-    //         const salt = await bcryptjs.genSalt(10);
-    //         const hashedPassword = await bcryptjs.hash(password, salt);
-    //
-    //         const newUser = new User({
-    //             email,
-    //             phone,
-    //             password: hashedPassword
-    //         });
-    //
-    //         await newUser.save();
-    //
-    //         // trả về thông tin user (không trả password)
-    //         const userData = {
-    //             email: newUser.email,
-    //             phone: newUser.phone
-    //         };
-    //
-    //         res.status(201).json({ message: "User registered", user: userData });
-    //     } catch (err) {
-    //         res.status(500).json({ error: err.message });
-    //     }
-    // });
+
 
     app.post('/register',  (req,res) => {
             console.log(req.body);

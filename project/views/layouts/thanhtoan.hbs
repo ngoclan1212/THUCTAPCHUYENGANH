@@ -1,0 +1,156 @@
+<div class="bill-container">
+    <div class="bill-card">
+        <div class="bill-header">
+            <h1 class="shop-name">N&Wool Flowers</h1>
+            <p class="bill-title">XÁC NHẬN ĐƠN HÀNG</p>
+            <div class="bill-date" id="current-date"></div>
+        </div>
+
+        <div class="bill-body">
+            <div class="bill-section">
+                <h3 class="section-title"><i class="fas fa-truck"></i> Thông Tin Nhận Hàng</h3>
+                <div class="input-group">
+                    <input type="text" id="customer-name" placeholder="Họ và tên người nhận" required>
+                    <input type="tel" id="customer-phone" placeholder="Số điện thoại" required>
+                    <textarea id="customer-address" placeholder="Địa chỉ giao hàng chi tiết" rows="2" required></textarea>
+                </div>
+            </div>
+
+            <div class="bill-section">
+                <h3 class="section-title"><i class="fas fa-shopping-basket"></i> Danh Sách Sản Phẩm</h3>
+                <table class="bill-table">
+                    <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>SL</th>
+                        <th class="text-right">Thành tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bill-items">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bill-section payment-section">
+                <h3 class="section-title"><i class="fas fa-credit-card"></i> Phương Thức Thanh Toán</h3>
+                <div class="payment-method">
+                    <input type="radio" id="cod" name="payment" checked>
+                    <label for="cod">
+                        <img src="https://cdn-icons-png.flaticon.com/512/6491/6491490.png" width="25">
+                        Thanh toán khi nhận hàng (COD)
+                    </label>
+                </div>
+            </div>
+
+            <div class="bill-divider"></div>
+
+            <div class="bill-summary">
+                <div class="summary-line">
+                    <span>Tổng tiền hàng:</span>
+                    <span id="bill-subtotal">0₫</span>
+                </div>
+                <div class="summary-line">
+                    <span>Phí vận chuyển:</span>
+                    <span class="free-ship">Miễn phí</span>
+                </div>
+                <div class="summary-line total">
+                    <span>TỔNG THANH TOÁN:</span>
+                    <span id="bill-total-final">0₫</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bill-footer">
+            <p>Vui lòng kiểm tra kỹ thông tin trước khi đặt hàng!</p>
+            <div class="bill-actions">
+
+                <button class="btn-confirm" id="btn-complete-order">HOÀN TẤT ĐẶT HÀNG</button>
+                <button class="btn-cancel" onclick="window.location.href='/giohang'">Quay lại giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+    // 1. Cập nhật ngày tháng hiển thị trên hóa đơn
+    document.getElementById('current-date').innerText = "Ngày: " + new Date().toLocaleDateString('vi-VN');
+
+    // 2. Lấy dữ liệu giỏ hàng từ LocalStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // 3. Hàm hiển thị danh sách sản phẩm lên bảng (ĐỪNG XÓA HÀM NÀY)
+    function renderBill() {
+        const billItems = document.getElementById("bill-items");
+        if (cart.length === 0) {
+            alert("Giỏ hàng của bạn đang trống!");
+            window.location.href = '/shop';
+            return;
+        }
+
+        let html = "";
+        let total = 0;
+        cart.forEach((item) => {
+            const sub = item.price * item.qty;
+            total += sub;
+            html += `
+            <tr>
+                <td><strong>${item.name}</strong></td>
+                <td>x${item.qty}</td>
+                <td class="text-right">${sub.toLocaleString()}₫</td>
+            </tr>`;
+        });
+
+        billItems.innerHTML = html;
+        document.getElementById('bill-subtotal').innerText = total.toLocaleString() + '₫';
+        document.getElementById('bill-total-final').innerText = total.toLocaleString() + '₫';
+    }
+
+    // 4. Xử lý nút HOÀN TẤT ĐẶT HÀNG (Đoạn này sẽ gửi dữ liệu lên Server)
+    document.getElementById('btn-complete-order').addEventListener('click', async (e) => {
+        e.preventDefault(); // RẤT QUAN TRỌNG
+
+        const name = document.getElementById('customer-name').value;
+        const phone = document.getElementById('customer-phone').value;
+        const address = document.getElementById('customer-address').value;
+
+        if (!name || !phone || !address) {
+            alert("Vui lòng nhập đầy đủ thông tin giao hàng!");
+            return;
+        }
+
+        const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+        const orderData = {
+            user: { name, phone, address },
+            items: cart,
+            total: totalAmount
+        };
+
+        try {
+            const response = await fetch('/thanhtoan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert("📦 Đặt hàng thành công!");
+                localStorage.removeItem('cart');
+                window.location.href = '/shop';
+            } else {
+                alert(result.message || "Lỗi tạo đơn hàng");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Không thể kết nối đến máy chủ. Hãy kiểm tra lại Server!");
+        }
+    });
+
+
+    // 5. Chạy hàm hiển thị ngay khi trang load
+    renderBill();
+</script>

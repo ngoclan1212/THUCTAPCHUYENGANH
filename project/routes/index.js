@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
 const Category = require('../models/category');
+const DonHang = require('../models/DonHang');
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -53,7 +54,7 @@ router.get('/shop', async (req, res) => {
         // Dùng .lean() để Handlebars có thể đọc dữ liệu dễ dàng
         const bohoa = await Category.find({ category: 'bohoa' }).lean();
         const giohoa = await Category.find({ category: 'giohoa' }).lean();
-
+        const topbanchay = await Category.find({ category: 'top' }).lean();
         // Log ra terminal để kiểm tra dữ liệu
         console.log("Shop - Bó hoa:", bohoa.length);
         console.log("Shop - Giỏ hoa:", giohoa.length);
@@ -202,4 +203,42 @@ router.get('/giohang', function(req, res, next) {
     res.render('layouts/giohang', { title: 'Giỏ Hàng N&Wool Flowers' });
 });
 
+router.get('/thanhtoan', function(req, res, next) {
+    res.render('layouts/thanhtoan', { title: 'Thanh Toán N&Wool Flowers' });
+});
+// Tìm đến đoạn router.post('/thanhtoan', ...)
+router.post('/thanhtoan', async (req, res) => {
+    try {
+        const { user, items, total } = req.body;
+
+        // Gom dữ liệu vào object buyer đúng cấu trúc Schema
+        const buyer = {
+            name: user.name || (req.user ? `${req.user.firstName} ${req.user.lastName}` : 'Khách vãng lai'),
+            phone: user.phone || '',
+            address: user.address || '',
+            // Lấy email từ người dùng đang đăng nhập hoặc từ form
+            email: (req.user && req.user.email) ? req.user.email : (user.email || 'guest@example.com')
+        };
+
+        const formattedItems = items.map(it => ({
+            name: it.name || 'Sản phẩm',
+            qty: Number(it.qty || 1),
+            price: Number(it.price || 0),
+            img: it.img || ''
+        }));
+
+        const newOrder = new DonHang({
+            user: buyer, // Lưu cả Object buyer vào trường user
+            items: formattedItems,
+            total: Number(total),
+            status: 'pending'
+        });
+
+        await newOrder.save();
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
 module.exports = router;
