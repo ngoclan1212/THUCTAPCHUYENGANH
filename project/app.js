@@ -47,6 +47,17 @@
                 sliceId: function (id) {
                     if (!id) return "N/A";
                     return id.toString().slice(-6).toUpperCase();
+                },
+                range: function (from, to) {
+                    let res = [];
+                    for (let i = from; i <= to; i++) res.push(i);
+                    return res;
+                },
+
+                lt: (a, b) => Number(a) < Number(b),
+                gt: (a, b) => Number(a) > Number(b),
+                inc: function(value) {
+                    return parseInt(value) + 1;
                 }
             }
         })
@@ -79,12 +90,10 @@
 
     var quanlydonhangRouter = require('./routes/quanlydonhang');
     var indexRouter = require('./routes/index');
-    var quanlyloaihoaRouter = require('./routes/quanlyloaihoa');
-
     var adminRouter = require('./routes/admin');
     var usersRouter = require('./routes/users');
     var categoryRouter = require('./routes/category');
-    var productRouter = require('./routes/product');
+    // var productRouter = require('./routes/product');
 
     console.log(path.join(__dirname, 'views', 'layouts'));
     // view engine setup
@@ -102,10 +111,8 @@
     app.use('/admin/quanlydonhang', quanlydonhangRouter);
     app.use('/', indexRouter);
     app.use('/admin', adminRouter);
+    // app.use('/admin/product', productRouter);
     app.use('/admin/category', categoryRouter);
-    app.use('/admin/product', productRouter);
-    app.use('/admin/quanlyloaihoa', quanlyloaihoaRouter);
-
     app.use('/admin/user', usersRouter);          // canonical path used by views
     app.use('/admin/KhachHang', usersRouter);     // optional alias for legacy links
     app.get('/admin/KhachHang', (req, res) => res.redirect('/admin/user'));

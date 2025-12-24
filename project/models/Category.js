@@ -37,7 +37,9 @@ const CategorySchema = new Schema({
         type: String,
         enum: ['bohoa', 'giohoa', 'top'],
         required: true
-    }
+    },
+    description: { type: String },
+    meaning: { type: String }
 });
 
 module.exports = mongoose.model('categories', CategorySchema);

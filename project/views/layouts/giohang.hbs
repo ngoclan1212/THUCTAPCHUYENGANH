@@ -156,10 +156,18 @@
 </div>
 
 <script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // 1. LẤY THÔNG TIN USER VÀ TẠO CHÌA KHÓA RIÊNG
+    const userId = "{{user._id}}";
+    // Chìa khóa này phải giống hệt bên index.hbs và shop.hbs
+    const cartKey = userId ? `cart_${userId}` : 'cart_guest';
+
+    // 2. LẤY DỮ LIỆU TỪ localStorage THEO TÚI HÀNG RIÊNG
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
     function renderCart() {
         const cartList = document.getElementById("cart-list");
+
+        // Nếu túi hàng của User này trống
         if (cart.length === 0) {
             cartList.innerHTML = `
                 <div style="text-align:center; padding:60px; background:white; border-radius:20px; box-shadow:var(--shadow);">
@@ -176,7 +184,6 @@
             const sub = item.price * item.qty;
             total += sub; qty += item.qty;
 
-            // Xác định loại (mặc định là Bó hoa nếu không có category)
             const typeLabel = item.category === 'giohoa' ? 'Giỏ hoa' : 'Bó hoa';
 
             html += `
@@ -211,40 +218,50 @@
         document.getElementById('total-all-final').innerText = t.toLocaleString() + '₫';
     }
 
+    // Thay đổi số lượng
     window.changeQty = (i, d) => {
-        if(cart[i].qty + d > 0) { cart[i].qty += d; save(); }
+        if(cart[i].qty + d > 0) {
+            cart[i].qty += d;
+            save();
+        }
     }
 
+    // Xóa từng món
     window.removeItem = (i) => {
-        if(confirm("Bạn muốn xóa sản phẩm này?")) { cart.splice(i,1); save(); }
+        if(confirm("Bạn muốn xóa sản phẩm này?")) {
+            cart.splice(i,1);
+            save();
+        }
     }
 
+    // Lưu vào đúng túi của User đang log
     function save() {
-        localStorage.setItem('cart', JSON.stringify(cart));
+        localStorage.setItem(cartKey, JSON.stringify(cart));
         renderCart();
     }
 
+    // Xóa tất cả túi hàng của User này
     document.getElementById('btn-clear-all').onclick = () => {
-        if(cart.length > 0 && confirm("Xóa toàn bộ giỏ hàng?")) { cart = []; save(); }
+        if(cart.length > 0 && confirm("Xóa toàn bộ giỏ hàng?")) {
+            cart = [];
+            save();
+        }
     }
 
     document.getElementById('btn-order').onclick = () => {
-        // 1. Kiểm tra giỏ hàng
         if (cart.length === 0) {
             return alert("Giỏ hàng của bạn đang trống!");
         }
 
-        // 2. Hiệu ứng nút bấm (Tùy chọn cho đẹp)
         const btn = document.getElementById('btn-order');
         btn.innerHTML = "⌛ Đang chuyển sang thanh toán...";
         btn.style.opacity = "0.7";
 
-        // 3. CHUYỂN HƯỚNG SANG TRANG BILL
-        // Lưu ý: KHÔNG dùng localStorage.removeItem('cart') ở đây.
         setTimeout(() => {
             window.location.href = '/thanhtoan';
-        }, 1000); // Chờ 1 giây để tạo hiệu ứng mượt mà
+        }, 1000);
     }
 
+    // Chạy lần đầu khi load trang
     renderCart();
 </script>

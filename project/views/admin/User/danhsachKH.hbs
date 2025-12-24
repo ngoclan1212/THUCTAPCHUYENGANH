@@ -1,62 +1,8 @@
-<!--<div class="container-fluid">-->
-<!--    <ol class="breadcrumb mb-4">-->
-<!--        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>-->
-<!--        <li class="breadcrumb-item active">Danh sách tài khoản hệ thống</li>-->
-<!--    </ol>-->
-
-<!--    <div class="card shadow mb-4">-->
-<!--        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">-->
-<!--            <span><i class="fa fa-user"></i> Quản lý User</span>-->
-<!--            <form method="GET" action="/admin/users/admin-list" class="form-inline">-->
-<!--                <input type="text" name="keyword" class="form-control form-control-sm mr-2" placeholder="Tìm email, tên..." value="{{keyword}}">-->
-<!--                <button class="btn btn-sm btn-light">Tìm</button>-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        <div class="card-body table-responsive">-->
-<!--            <table class="table table-bordered table-hover">-->
-<!--                <thead class="thead-light">-->
-<!--                <tr>-->
-<!--                    <th width="50">STT</th>-->
-<!--                    <th>Họ</th>-->
-<!--                    <th>Tên</th>-->
-<!--                    <th>Email</th>-->
-<!--                    <th>Mật khẩu (Hash)</th>-->
-<!--                    <th class="text-center" width="100">Xóa</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                {{#if users.length}}-->
-<!--                    {{#each users}}-->
-<!--                        <tr>-->
-<!--                            <td>{{this.stt}}</td>-->
-<!--                            <td>{{this.firstName}}</td>-->
-<!--                            <td><strong>{{this.lastName}}</strong></td>-->
-<!--                            <td>{{this.email}}</td>-->
-<!--                            <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-->
-<!--                                <small class="text-muted">{{this.password}}</small>-->
-<!--                            </td>-->
-<!--                            <td class="text-center">-->
-<!--                                <a href="/admin/users/delete/{{this._id}}"-->
-<!--                                   onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?')"-->
-<!--                                   class="btn btn-sm btn-danger">-->
-<!--                                    <i class="fa fa-trash"></i>-->
-<!--                                </a>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    {{/each}}-->
-<!--                {{else}}-->
-<!--                    <tr><td colspan="6" class="text-center py-4">Chưa có dữ liệu User trong MongoDB</td></tr>-->
-<!--                {{/if}}-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<a href="/admin/user/create" class="btn btn-primary">
-    Add User
-</a>
-<br><br>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+</ol>
 
 <table class="table table-bordered table-hover text-center">
     <thead class="table-dark">

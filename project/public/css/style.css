@@ -980,6 +980,23 @@ body {
 .btn-signup:hover {
     background-color: #357ab7;
 }
+.search-bar-styled {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f5;
+    border: 1px solid #e9ecef;
+    border-radius: 30px;
+    padding: 4px 10px;
+}
+.search-bar-styled input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    width: 140px;
+}
+.btn-auth { text-decoration: none; }
 
 /* Footer */
 footer {
@@ -1008,100 +1025,59 @@ footer p {
 }
 
 /* === PAGES === */
-section{
-    background:#fdfaf7;
-}
-section h2{
-    font-family: 'Playfair Display', serif;
-    color:#5ca0d3;
-    font-size:2rem;
-}
-section h2 span{
-    color:#3a90cc;
-}
-section p{
-    font-size:1.1rem;
-    line-height:1.8;
-    color:#221f1b;
-}
-.parallax-banner {
-    font-family: 'Playfair Display', serif;
-    font-size:2rem;
-}
-/* Image hover effect */
-.about-img {
-    border-radius: 15px;
-    transition: transform 0.6s ease, box-shadow 0.4s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-.about-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 28px rgba(92,160,211,0.3);
-}
+ .brand-story-wrapper {
+     background-color: #f0f7ff; /* Nền xanh biển nhạt */
+     overflow: hidden;
+ }
 
-/* Parallax footer */
-.parallax-banner {
-    background: linear-gradient(rgba(92,160,211,0.7), rgba(92,160,211,0.7)), url('/img/banner4.jpg') center/cover fixed;
-    height: 250px;
-}
+.mb-100 { margin-bottom: 100px; }
+.tracking-widest { letter-spacing: 0.3em; }
 
-/* Scroll reveal animation */
+/* Hiệu ứng ẩn nội dung lúc đầu */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(50px);
     transition: all 1s ease;
 }
+
+/* Hiệu ứng khi hiện ra */
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
-.fade-up {
-    animation-delay: 0.3s;
+
+/* Image Grid */
+.image-grid-premium { position: relative; padding-bottom: 40px; }
+.item-large img { width: 90%; height: 500px; object-fit: cover; }
+/* Tìm đoạn này trong CSS của bạn */
+.item-small {
+    position: absolute;
+    bottom: -80px; /* Thay đổi từ -30px thành -80px hoặc hơn để kéo ảnh xuống */
+    right: 0;
+    width: 45%;
+    height: 280px;
+    border: 10px solid #f0f7ff;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 2; /* Đảm bảo ảnh nhỏ luôn nằm trên */
+}
+.item-small img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Cards */
+.value-card { background: white; transition: 0.3s ease; }
+.value-card:hover { transform: translateY(-15px); }
+.active-card { background: #0d47a1 !important; }
+.shadow-blue { box-shadow: 0 10px 20px rgba(13, 71, 161, 0.2); }
+
+.custom-list li { margin-bottom: 15px; font-weight: 500; color: #444; }
+
+/* Parallax Footer */
+.parallax-banner-premium {
+    background: linear-gradient(rgba(13, 71, 161, 0.6), rgba(13, 71, 161, 0.6)),
+    url('/img/12.jpg') center/cover no-repeat fixed;
+    height: 400px;
 }
 
-/* Responsive */
-@media(max-width:768px){
-    .about-section .row {
-        flex-direction: column !important;
-        text-align: center;
-    }
-    .about-section .row img {
-        margin-bottom: 20px;
-    }
-}
-.carousel-item img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-
-    animation: fadeBlur 2s ease-out,
-    parallaxMove 10s ease-in-out infinite;
-}
-
-/* Hiệu ứng fade + blur khi load */
-@keyframes fadeBlur {
-    0% {
-        opacity: 0;
-        filter: blur(8px) brightness(0.8);
-    }
-    100% {
-        opacity: 1;
-        filter: blur(0) brightness(1);
-    }
-}
-
-/* Hiệu ứng parallax chuyển động chậm */
-@keyframes parallaxMove {
-    0% {
-        transform: scale(1.05) translateX(0);
-    }
-    50% {
-        transform: scale(1.05) translateX(-15px);
-    }
-    100% {
-        transform: scale(1.05) translateX(0);
-    }
-}
 
 /* === SHOP === */
 /* Container sản phẩm */
@@ -1257,11 +1233,39 @@ footer {
 @media(min-width: 992px) { .product-card { width: 18%; } }
 
 /* === CONTACT === */
-.col-lg-6 h2{
-    color:#6b3f2a; font-family: 'Playfair Display', serif;
+.contact-page {
+    background-color: #faf9f6; /* Nền kem nhạt tạo cảm giác tươi mới */
+    padding: 60px 0;
+    background: #f0f7ff;
 }
-.col-lg-6 p{
-    color:#4a4a4a;
+.contact-img {
+    width: 100%;
+    max-width: 550px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    object-fit: cover;
+}
+.intro-title {
+    color: #0d47a1; /* Màu xanh biển đậm */
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.intro-text {
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+}
+.feature-list i {
+    color: #0d47a1;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+.contact-details {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 5px solid #0d47a1;
+    margin-top: 25px;
 }
 
 /* === GIOHANG === */
@@ -1718,26 +1722,6 @@ footer {
     box-shadow: 0 8px 20px rgba(92, 160, 211, 0.35);
 }
 
-/* Thông báo nhỏ khi thêm thành công */
-#cart-message {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #2f514b;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 10px;
-    display: none;
-    z-index: 10000;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    font-weight: 500;
-}
-#cart-message.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
 /* Newsletter */
 #newsletter {
     background:linear-gradient(90deg,#5ca0d3,#eaf4f2);
@@ -1770,21 +1754,34 @@ footer {
 
 /* Floating Cart Message */
 #cart-message {
+    /*position: fixed;*/
+    /*top: 20px;*/
+    /*right: 20px;*/
+    /*background: #5ca0d3;*/
+    /*color: #fff;*/
+    /*padding: 14px 28px;*/
+    /*border-radius: 10px;*/
+    /*font-size: 16px;*/
+    /*z-index: 9999;*/
+    /*font-weight: 600;*/
+    /*box-shadow: 0 6px 20px rgba(0,0,0,0.3);*/
+    /*opacity: 0;*/
+    /*pointer-events: none;*/
+    /*transform: translateY(-15px);*/
+    /*transition: opacity .35s ease, transform .35s ease;*/
+    display: none;
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #5ca0d3;
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-size: 16px;
-    z-index: 9999;
-    font-weight: 600;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-15px);
-    transition: opacity .35s ease, transform .35s ease;
+    top: 20px;       /* Cách mép trên 20px */
+    right: 20px;     /* Cách mép phải 20px */
+    background-color: #e3f2fd; /* Màu xanh biển rất nhạt (Light Blue) */
+    color: #0d47a1;           /* Chữ màu xanh biển đậm để dễ đọc */
+    border: 1px solid #bbdefb; /* Viền xanh biển nhẹ */
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-weight: 500;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
 
 #cart-message.show {
@@ -1969,3 +1966,19 @@ label {
 .btn-confirm:hover { background: #0c8bb1; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(17,169,213,0.3); }
 
 .btn-cancel { background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; }
+
+/* === category-list === */
+.table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #6c757d;
+    border-bottom: 2px solid #dee2e6;
+}
+.img-thumbnail {
+    border-radius: 8px;
+}
+.badge {
+    font-weight: 500;
+    font-size: 0.8rem;
+}

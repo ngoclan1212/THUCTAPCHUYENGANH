@@ -1,10 +1,13 @@
-
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/category">Category</a>
+    </li>
+    <li class="breadcrumb-item active">Thêm</li>
+</ol>
 <div class=" container-fluid">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="/admin/category">Category</a>
-        </li>
-    </ol>
     <div class="card-body">
         <div class="col-md-0">
             <div class="card shadow-lg rounded-4">
@@ -52,6 +55,15 @@
 <!--                        </div>-->
 
                         <!-- Buttons -->
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả chi tiết</label>
+                            <textarea name="description" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ý nghĩa hoa</label>
+                            <textarea name="meaning" class="form-control" rows="3" placeholder="Nhập ý nghĩa của đóa hoa..."></textarea>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Add A Category</button>
 
                     </form>

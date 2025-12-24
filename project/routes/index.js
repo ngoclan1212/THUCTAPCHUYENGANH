@@ -11,16 +11,6 @@ router.all('/*', function(req,
     res.app.locals.layout='home';
     next();
 })
-/* GET home page. */
-// router.get('/', async function(req, res, next) {
-//     const bohoa = await Category.find({ category: 'bohoa' });
-//     const loaihoa = await Category.find({ category: 'loaihoa' });
-//     const top = await Category.find({ category: 'top' });
-//     res.render('home/index', {
-//         bohoa,
-//         loaihoa,
-//         top });
-// });
 router.get('/', async function(req, res, next) {
     try {
         // Thêm .lean() vào cuối mỗi truy vấn find
@@ -107,27 +97,6 @@ router.post('/login', (req, res, next) => {
         res.redirect('/');   // Sau khi login → về trang chủ
     });
 });
-// router.post('/login', (req, res, next) => {
-//     passport.authenticate('local', (err, user, info) => {
-//         if (err) return next(err);
-//         if (!user) return res.redirect('/login');
-//
-//         req.logIn(user, err => {
-//             if (err) return next(err);
-//
-//             // Lưu user vào session để dùng ở layout
-//             req.session.user = {
-//                 id: user._id,
-//                 email: user.email,
-//                 role: user.role // nếu bạn có role
-//             };
-//
-//             // ⭐ Sau login → LUÔN VỀ TRANG HOME
-//             return res.redirect('/');
-//         });
-//     })(req, res, next);
-// });
-
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
@@ -239,6 +208,25 @@ router.post('/thanhtoan', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: err.message });
+    }
+});
+router.get('/thongtin/:id', async (req, res) => {
+    try {
+        // Tìm hoa trong bảng Category bằng ID
+        const hoa = await Category.findById(req.params.id).lean();
+
+        if (!hoa) {
+            return res.status(404).send("Không tìm thấy mẫu hoa này");
+        }
+
+        // Truyền dữ liệu sang thongtin.hbs
+        res.render('layouts/thongtin', {
+            title: hoa.name,
+            product: hoa // Truyền nguyên object hoa vào biến 'product'
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Lỗi server");
     }
 });
 module.exports = router;

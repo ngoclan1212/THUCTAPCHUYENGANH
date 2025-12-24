@@ -45,9 +45,26 @@
         <div class="product-grid">
             {{#if bohoa.length}}
                 {{#each bohoa}}
-                    <div class="card-product">
-                        <img src="/img/{{image}}" alt="{{name}}">
-                        <h5>{{name}}</h5>
+<!--                    <div class="card-product">-->
+<!--                        <img src="/img/{{image}}" alt="{{name}}">-->
+<!--                        <h5>{{name}}</h5>-->
+<!--                        <p class="price">{{formatCurrency price}}₫</p>-->
+<!--                        <button class="btn-add-cart"-->
+<!--                                data-name="{{name}}"-->
+<!--                                data-price="{{price}}"-->
+<!--                                data-img="/img/{{image}}">-->
+<!--                            Thêm vào giỏ-->
+<!--                        </button>-->
+<!--                    </div>-->
+                    <div class="card-product visible">
+                        <a href="/thongtin/{{_id}}">
+                            <img src="/img/{{image}}" alt="{{name}}">
+                        </a>
+
+                        <a href="/thongtin/{{_id}}" style="text-decoration: none; color: inherit;">
+                            <h5>{{name}}</h5>
+                        </a>
+
                         <p class="price">{{formatCurrency price}}₫</p>
                         <button class="btn-add-cart"
                                 data-name="{{name}}"
@@ -66,9 +83,26 @@
         <div class="product-grid">
             {{#if giohoa.length}}
                 {{#each giohoa}}
-                    <div class="card-product">
-                        <img src="/img/{{image}}" alt="{{name}}">
-                        <h5>{{name}}</h5>
+<!--                    <div class="card-product">-->
+<!--                        <img src="/img/{{image}}" alt="{{name}}">-->
+<!--                        <h5>{{name}}</h5>-->
+<!--                        <p class="price">{{formatCurrency price}}₫</p>-->
+<!--                        <button class="btn-add-cart"-->
+<!--                                data-name="{{name}}"-->
+<!--                                data-price="{{price}}"-->
+<!--                                data-img="/img/{{image}}">-->
+<!--                            Thêm vào giỏ-->
+<!--                        </button>-->
+<!--                    </div>-->
+                    <div class="card-product visible">
+                        <a href="/thongtin/{{_id}}">
+                            <img src="/img/{{image}}" alt="{{name}}">
+                        </a>
+
+                        <a href="/thongtin/{{_id}}" style="text-decoration: none; color: inherit;">
+                            <h5>{{name}}</h5>
+                        </a>
+
                         <p class="price">{{formatCurrency price}}₫</p>
                         <button class="btn-add-cart"
                                 data-name="{{name}}"
@@ -87,9 +121,26 @@
         <div class="product-grid">
             {{#if top.length}}
                 {{#each top}}
-                    <div class="card-product">
-                        <img src="/img/{{image}}" alt="{{name}}">
-                        <h5>{{name}}</h5>
+<!--                    <div class="card-product">-->
+<!--                        <img src="/img/{{image}}" alt="{{name}}">-->
+<!--                        <h5>{{name}}</h5>-->
+<!--                        <p class="price">{{formatCurrency price}}₫</p>-->
+<!--                        <button class="btn-add-cart"-->
+<!--                                data-name="{{name}}"-->
+<!--                                data-price="{{price}}"-->
+<!--                                data-img="/img/{{image}}">-->
+<!--                            Thêm vào giỏ-->
+<!--                        </button>-->
+<!--                    </div>-->
+                    <div class="card-product visible">
+                        <a href="/thongtin/{{_id}}">
+                            <img src="/img/{{image}}" alt="{{name}}">
+                        </a>
+
+                        <a href="/thongtin/{{_id}}" style="text-decoration: none; color: inherit;">
+                            <h5>{{name}}</h5>
+                        </a>
+
                         <p class="price">{{formatCurrency price}}₫</p>
                         <button class="btn-add-cart"
                                 data-name="{{name}}"
@@ -154,11 +205,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // 1. Hiệu ứng Banner và Scroll (Giữ nguyên của bạn)
     window.addEventListener('load', () => {
-        document.getElementById('mainBanner').classList.add('loaded');
+        const mainBanner = document.getElementById('mainBanner');
+        if (mainBanner) mainBanner.classList.add('loaded');
+        handleScroll();
     });
 
-    // Scroll effects
     const fadeElements = document.querySelectorAll('.card-product');
     const newsletter = document.getElementById('newsletter');
 
@@ -167,26 +220,36 @@
             const rect = el.getBoundingClientRect();
             if(rect.top < window.innerHeight - 50) el.classList.add('visible');
         });
-
-        if(newsletter.getBoundingClientRect().top < window.innerHeight - 50)
+        if(newsletter && newsletter.getBoundingClientRect().top < window.innerHeight - 50)
             newsletter.classList.add('visible');
     }
 
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('load', handleScroll);
 
-    // --- CART BUTTON FIX ---
+    // 2. LOGIC PHÂN TÁCH GIỎ HÀNG THEO TỪNG EMAIL (USER ID)
     const cartIcon = document.getElementById('cart-fly');
-    const message = document.getElementById("cart-message");
+    const cartMessage = document.getElementById("cart-message");
     const addToCartButtons = document.querySelectorAll(".btn-add-cart");
 
+    // Lấy ID người dùng từ Handlebars để tạo chìa khóa riêng
+    const isLoggedIn = {{#if user}}true{{else}}false{{/if}};
+    const userId = "{{user._id}}";
+
+    // Nếu đã đăng nhập, khóa sẽ là 'cart_6582xxx...', nếu chưa là 'cart_guest'
+    const cartKey = isLoggedIn ? `cart_${userId}` : 'cart_guest';
+
     addToCartButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
 
-            // Hiện thông báo
-            message.style.display = "block";
-            message.style.opacity = "1";
+            // --- BƯỚC 1: KIỂM TRA ĐĂNG NHẬP ---
+            if (!isLoggedIn) {
+                alert("Bạn cần phải đăng ký hoặc đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                window.location.href = "/sign";
+                return;
+            }
 
+            // --- BƯỚC 2: XỬ LÝ GIỎ HÀNG (Lưu vào cartKey riêng của mỗi user) ---
             const product = {
                 name: btn.dataset.name,
                 price: Number(btn.dataset.price),
@@ -194,11 +257,10 @@
                 qty: 1
             };
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            // Lấy dữ liệu từ chìa khóa riêng của tài khoản đang đăng nhập
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-            const existing = cart.find(item =>
-                    item.name === product.name && item.img === product.img
-            );
+            const existing = cart.find(item => item.name === product.name && item.img === product.img);
 
             if (existing) {
                 existing.qty += 1;
@@ -206,54 +268,47 @@
                 cart.push(product);
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
+            // Lưu lại vào đúng ngăn chứa của tài khoản đó
+            localStorage.setItem(cartKey, JSON.stringify(cart));
 
-            // ⭐ Thêm dòng này để chuyển sang giỏ hàng ngay
-            window.location.href = "/giohang";
+            // --- BƯỚC 3: HIỆU ỨNG THÊM HÀNG ---
+            if (cartMessage) {
+                cartMessage.style.display = "block";
+                cartMessage.style.opacity = "1";
+            }
 
-            // 2 giây sau tự ẩn
+            // Hiệu ứng bay (Fly effect)
+            if (cartIcon) {
+                const flyIcon = document.createElement('div');
+                flyIcon.style.width = '30px';
+                flyIcon.style.height = '30px';
+                flyIcon.style.background = "url('/img/cart-icon.png') no-repeat center/contain";
+                flyIcon.style.position = 'fixed';
+
+                const rect = btn.getBoundingClientRect();
+                flyIcon.style.top = rect.top + 'px';
+                flyIcon.style.left = rect.left + 'px';
+                flyIcon.style.zIndex = 1000;
+                document.body.appendChild(flyIcon);
+
+                const endX = cartIcon.getBoundingClientRect().left;
+                const endY = cartIcon.getBoundingClientRect().top;
+
+                flyIcon.animate([
+                    { transform: `translate(0, 0) scale(1)` },
+                    { transform: `translate(${endX - rect.left}px, ${endY - rect.top}px) scale(0.5)` }
+                ], {
+                    duration: 800,
+                    easing: 'ease-in-out'
+                });
+
+                setTimeout(() => flyIcon.remove(), 800);
+            }
+
+            // Chuyển sang trang giỏ hàng sau khi lưu xong
             setTimeout(() => {
-                message.style.opacity = "0";
-                setTimeout(() => message.style.display = "none", 300);
-            }, 400);
-        });
-    });
-
-    addButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-
-            // Hiện thông báo
-            cartMessage.classList.add("show");
-            setTimeout(() => {
-                cartMessage.classList.remove("show");
-            }, 2000);
-
-            // Hiệu ứng icon bay vào giỏ
-            const flyIcon = document.createElement('div');
-            flyIcon.style.width = '30px';
-            flyIcon.style.height = '30px';
-            flyIcon.style.background = "url('img/cart-icon.png') no-repeat center/contain";
-            flyIcon.style.position = 'absolute';
-
-            const rect = btn.getBoundingClientRect();
-            flyIcon.style.top = rect.top + 'px';
-            flyIcon.style.left = rect.left + 'px';
-            flyIcon.style.zIndex = 1000;
-
-            document.body.appendChild(flyIcon);
-
-            const endX = cartIcon.getBoundingClientRect().left;
-            const endY = cartIcon.getBoundingClientRect().top;
-
-            flyIcon.animate([
-                { transform: `translate(0, 0) scale(1)` },
-                { transform: `translate(${endX - rect.left}px, ${endY - rect.top}px) scale(0.5)` }
-            ], {
-                duration: 800,
-                easing: 'ease-in-out'
-            });
-
-            setTimeout(() => flyIcon.remove(), 800);
+                window.location.href = "/giohang";
+            }, 600);
         });
     });
 </script>

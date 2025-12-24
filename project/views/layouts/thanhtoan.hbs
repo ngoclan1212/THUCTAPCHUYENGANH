@@ -11,7 +11,13 @@
                 <h3 class="section-title"><i class="fas fa-truck"></i> Thông Tin Nhận Hàng</h3>
                 <div class="input-group">
                     <input type="text" id="customer-name" placeholder="Họ và tên người nhận" required>
-                    <input type="tel" id="customer-phone" placeholder="Số điện thoại" required>
+
+                    <input type="tel" id="customer-phone"
+                           placeholder="Số điện thoại (10 chữ số)"
+                           maxlength="10"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                           required>
+
                     <textarea id="customer-address" placeholder="Địa chỉ giao hàng chi tiết" rows="2" required></textarea>
                 </div>
             </div>
@@ -63,7 +69,6 @@
         <div class="bill-footer">
             <p>Vui lòng kiểm tra kỹ thông tin trước khi đặt hàng!</p>
             <div class="bill-actions">
-
                 <button class="btn-confirm" id="btn-complete-order">HOÀN TẤT ĐẶT HÀNG</button>
                 <button class="btn-cancel" onclick="window.location.href='/giohang'">Quay lại giỏ hàng</button>
             </div>
@@ -77,12 +82,17 @@
     // 1. Cập nhật ngày tháng hiển thị trên hóa đơn
     document.getElementById('current-date').innerText = "Ngày: " + new Date().toLocaleDateString('vi-VN');
 
-    // 2. Lấy dữ liệu giỏ hàng từ LocalStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // 2. Xác định User và Chìa khóa giỏ hàng
+    const userId = "{{user._id}}";
+    const cartKey = userId ? `cart_${userId}` : 'cart_guest';
 
-    // 3. Hàm hiển thị danh sách sản phẩm lên bảng (ĐỪNG XÓA HÀM NÀY)
+    // Lấy dữ liệu từ localStorage theo ID người dùng
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+    // 3. Hàm hiển thị danh sách sản phẩm lên bảng
     function renderBill() {
         const billItems = document.getElementById("bill-items");
+
         if (cart.length === 0) {
             alert("Giỏ hàng của bạn đang trống!");
             window.location.href = '/shop';
@@ -107,16 +117,26 @@
         document.getElementById('bill-total-final').innerText = total.toLocaleString() + '₫';
     }
 
-    // 4. Xử lý nút HOÀN TẤT ĐẶT HÀNG (Đoạn này sẽ gửi dữ liệu lên Server)
+    // 4. Xử lý nút HOÀN TẤT ĐẶT HÀNG
     document.getElementById('btn-complete-order').addEventListener('click', async (e) => {
-        e.preventDefault(); // RẤT QUAN TRỌNG
+        e.preventDefault();
 
-        const name = document.getElementById('customer-name').value;
-        const phone = document.getElementById('customer-phone').value;
-        const address = document.getElementById('customer-address').value;
+        // Lấy dữ liệu và xóa khoảng trắng thừa
+        const name = document.getElementById('customer-name').value.trim();
+        const phone = document.getElementById('customer-phone').value.trim();
+        const address = document.getElementById('customer-address').value.trim();
 
+        // KIỂM TRA 1: Dữ liệu trống
         if (!name || !phone || !address) {
             alert("Vui lòng nhập đầy đủ thông tin giao hàng!");
+            return;
+        }
+
+        // KIỂM TRA 2: Số điện thoại phải đủ 10 số
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            alert("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 chữ số.");
+            document.getElementById('customer-phone').focus();
             return;
         }
 
@@ -128,6 +148,11 @@
             total: totalAmount
         };
 
+        // Hiệu ứng chờ khi đang gửi dữ liệu
+        const btn = document.getElementById('btn-complete-order');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+
         try {
             const response = await fetch('/thanhtoan', {
                 method: 'POST',
@@ -138,19 +163,25 @@
             const result = await response.json();
 
             if (result.success) {
-                alert("📦 Đặt hàng thành công!");
-                localStorage.removeItem('cart');
+                alert("📦 Đặt hàng thành công! Cảm ơn bạn đã ủng hộ shop.");
+
+                // Xóa giỏ hàng của user sau khi đặt xong
+                localStorage.removeItem(cartKey);
+
                 window.location.href = '/shop';
             } else {
                 alert(result.message || "Lỗi tạo đơn hàng");
+                btn.disabled = false;
+                btn.innerHTML = "HOÀN TẤT ĐẶT HÀNG";
             }
         } catch (err) {
             console.error(err);
-            alert("Không thể kết nối đến máy chủ. Hãy kiểm tra lại Server!");
+            alert("Không thể kết nối đến máy chủ. Vui lòng thử lại sau!");
+            btn.disabled = false;
+            btn.innerHTML = "HOÀN TẤT ĐẶT HÀNG";
         }
     });
 
-
-    // 5. Chạy hàm hiển thị ngay khi trang load
+    // Khởi chạy khi vào trang
     renderBill();
 </script>

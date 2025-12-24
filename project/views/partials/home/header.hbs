@@ -1,42 +1,113 @@
-<!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 fw-bold">
     <div class="container">
-    <!-- Logo -->
         <a href="/" class="navbar-brand d-flex align-items-center">
             <i class="bi bi-flower1 me-2 text-primary fs-4"></i>
             <span>N&Fresh Flowers</span>
         </a>
 
-        <!-- Menu toggle (mobile) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-<!-- Menu items -->
-<div id="menu" class="collapse navbar-collapse">
-    <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="/pages" class="nav-link">Pages</a></li>
-        <li class="nav-item"><a href="/shop" class="nav-link">Shop</a></li>
-        <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-    </ul>
+        <div id="menu" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/pages" class="nav-link">Pages</a></li>
+                <li class="nav-item"><a href="/shop" class="nav-link">Shop</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 
-    <!-- Cart + Auth Buttons -->
-    <div class="d-flex align-items-center ms-3">
-        <!-- Cart Icon -->
-        <a href="/giohang" class="text-dark me-3 position-relative">
-            <i class="bi bi-cart3 fs-4"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
-        </a>
+                <li class="nav-item ms-lg-3">
+                    <form action="/shop" method="GET" id="search-form" class="search-bar-styled">
+                        <i class="bi bi-search ms-2"></i>
+                        <input type="text" name="search" id="main-search-input" placeholder="Tìm kiếm hoa..." autocomplete="off">
+                    </form>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
+                <a href="/giohang" class="text-dark me-3 position-relative">
+                    <i class="bi bi-cart3 fs-4"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count"></span>
+                </a>
+
+                {{#if user}}
+                    <span class="text-info me-2 small">Chào, {{user.email}}</span>
+                    <a href="/logout" class="btn-auth me-2">Logout</a>
+                {{else}}
+                    <a href="/login" class="btn-auth me-2">Login</a>
+                    <a href="/sign" class="btn-auth">Sign Up</a>
+                {{/if}}
+            </div>
+        </div>
     </div>
-    {{#if user}}
-        <span class="text-info">Chào mừng, {{user.email}}  đến với N&Fresh Flowers </span>
-        <a href="/logout" class="btn-auth me-2">Logout</a>
-    {{else}}
-        <a href="/login" class="btn-auth me-2">Login</a>
-        <a href="/sign" class="btn-auth">Sign Up</a>
-    {{/if}}
-</div>
-</div>
 </nav>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('main-search-input');
+        const searchForm = document.getElementById('search-form');
+
+        // Hàm xóa dấu tiếng Việt chuẩn
+        function clean(str) {
+            if (!str) return "";
+            return str.normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/[đĐ]/g, "d")
+                    .toLowerCase()
+                    .trim();
+        }
+
+        function filterNow() {
+            const keyword = clean(searchInput.value);
+            const cards = document.querySelectorAll('.card-product');
+            const sections = document.querySelectorAll('.sub-title'); // Các thẻ h3 (Bó hoa, Giỏ hoa...)
+
+            if (cards.length > 0) {
+                cards.forEach(card => {
+                    const name = clean(card.querySelector('h5')?.innerText || "");
+
+                    if (name.includes(keyword)) {
+                        // Hiện sản phẩm và đảm bảo nó không bị ảnh hưởng bởi CSS cũ
+                        card.style.setProperty('display', 'block', 'important');
+                        card.style.opacity = "1";
+                        card.classList.add('visible'); // Đồng bộ với hiệu ứng scroll của bạn
+                    } else {
+                        // Ẩn sản phẩm
+                        card.style.setProperty('display', 'none', 'important');
+                    }
+                });
+
+                // Tự động ẩn luôn cái tiêu đề (h3) nếu trong nhóm đó không có hoa nào khớp
+                sections.forEach(section => {
+                    const nextGrid = section.nextElementSibling;
+                    if (nextGrid && nextGrid.classList.contains('product-grid')) {
+                        const visibleCards = nextGrid.querySelectorAll('.card-product[style*="display: block"]');
+                        section.style.display = (visibleCards.length === 0 && keyword !== "") ? "none" : "block";
+                    }
+                });
+            }
+        }
+
+        // Lắng nghe gõ phím
+        searchInput.addEventListener('input', filterNow);
+
+        // Xử lý nhấn Enter
+        searchForm.addEventListener('submit', (e) => {
+            const cards = document.querySelectorAll('.card-product');
+            if (cards.length > 0) {
+                e.preventDefault();
+                filterNow();
+                // Cuộn xuống khu vực sản phẩm để thấy kết quả
+                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Xử lý khi từ trang khác nhảy về (Shop)
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('search');
+        if (query) {
+            searchInput.value = query;
+            setTimeout(filterNow, 300);
+        }
+    });
+</script>

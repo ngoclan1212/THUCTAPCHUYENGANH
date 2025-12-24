@@ -1,0 +1,90 @@
+<section class="product-detail-page py-5" style="background-color: #f0f7ff; min-height: 80vh;">
+    <div class="container">
+        <a href="/shop" class="btn btn-outline-primary mb-4 rounded-pill">
+            <i class="bi bi-arrow-left me-2"></i>Quay lại cửa hàng
+        </a>
+
+        <div class="bg-white p-4 p-md-5 rounded-4 shadow-lg border-0">
+            <div class="row g-5">
+                <div class="col-lg-6 text-center">
+                    <img src="/img/{{product.image}}" class="img-fluid rounded-4 shadow-sm main-product-img"
+                         alt="{{product.name}}" style="max-height: 550px; width: 100%; object-fit: cover; border: 8px solid #f8f9fa;">
+                </div>
+
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold" style="color: #0d47a1;">{{product.name}}</h1>
+                    <h2 class="text-danger fw-bold my-4">{{formatCurrency product.price}}₫</h2>
+
+                    <div class="py-3 px-4 bg-light rounded-3 mb-4">
+                        <i class="bi bi-truck me-2 text-primary"></i> Miễn phí giao hàng nội thành
+                    </div>
+
+                    <div class="content-detail mt-4">
+                        <div class="mb-4">
+                            <h5 class="fw-bold border-bottom pb-2 text-primary">
+                                <i class="bi bi-info-circle me-2"></i>Mô tả sản phẩm
+                            </h5>
+                            <p class="text-muted" style="white-space: pre-line; line-height: 1.8; font-size: 1.1rem;">
+                                {{product.description}}
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="fw-bold border-bottom pb-2 text-primary">
+                                <i class="bi bi-chat-quote me-2"></i>Ý nghĩa đóa hoa
+                            </h5>
+                            <p class="text-muted" style="white-space: pre-line; line-height: 1.8; font-style: italic;">
+                                {{product.meaning}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button class="btn btn-primary btn-lg rounded-pill px-5 btn-add-cart shadow"
+                                data-name="{{product.name}}"
+                                data-price="{{product.price}}"
+                                data-img="/img/{{product.image}}">
+                            <i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnAddCart = document.querySelector('.btn-add-cart');
+
+        if (btnAddCart) {
+            btnAddCart.addEventListener('click', function() {
+                // 1. Lấy dữ liệu từ attribute data-
+                const product = {
+                    name: this.dataset.name,
+                    price: Number(this.dataset.price),
+                    img: this.dataset.img,
+                    qty: 1
+                };
+
+                // 2. Lấy giỏ hàng từ localStorage
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // 3. Kiểm tra sản phẩm đã tồn tại trong giỏ chưa
+                const existing = cart.find(item => item.name === product.name && item.img === product.img);
+
+                if (existing) {
+                    existing.qty += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                // 4. Lưu lại vào localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // 5. Thông báo và chuyển hướng sang trang giỏ hàng
+                // Bạn có thể dùng alert hoặc chuyển hướng ngay lập tức
+                window.location.href = "/giohang";
+            });
+        }
+    });
+</script>

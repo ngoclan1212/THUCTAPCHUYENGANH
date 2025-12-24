@@ -11,13 +11,21 @@
         <div class="product-grid">
             {{#each bohoa}}
                 <div class="card-product visible">
-                    <img src="/img/{{image}}" alt="{{name}}">
-                    <h5>{{name}}</h5>
+                    <a href="/thongtin/{{_id}}">
+                        <img src="/img/{{image}}" alt="{{name}}">
+                    </a>
+
+                    <a href="/thongtin/{{_id}}" style="text-decoration: none; color: inherit;">
+                        <h5>{{name}}</h5>
+                    </a>
+
                     <p class="price">{{formatCurrency price}}₫</p>
                     <button class="btn-add-cart"
                             data-name="{{name}}"
                             data-price="{{price}}"
-                            data-img="/img/{{image}}">Thêm vào giỏ</button>
+                            data-img="/img/{{image}}">
+                        Thêm vào giỏ
+                    </button>
                 </div>
             {{/each}}
         </div>
@@ -26,13 +34,30 @@
             <h3 class="sub-title">Giỏ Hoa</h3>
             <div class="product-grid">
                 {{#each giohoa}}
-                    <div class="card-product visible"> <img src="/img/{{image}}" alt="{{name}}">
-                        <h5>{{name}}</h5>
+<!--                    <div class="card-product visible"> <img src="/img/{{image}}" alt="{{name}}">-->
+<!--                        <h5>{{name}}</h5>-->
+<!--                        <p class="price">{{formatCurrency price}}₫</p>-->
+<!--                        <button class="btn-add-cart"-->
+<!--                                data-name="{{name}}"-->
+<!--                                data-price="{{price}}"-->
+<!--                                data-img="/img/{{image}}">Thêm vào giỏ</button>-->
+<!--                    </div>-->
+                    <div class="card-product visible">
+                        <a href="/thongtin/{{_id}}">
+                            <img src="/img/{{image}}" alt="{{name}}">
+                        </a>
+
+                        <a href="/thongtin/{{_id}}" style="text-decoration: none; color: inherit;">
+                            <h5>{{name}}</h5>
+                        </a>
+
                         <p class="price">{{formatCurrency price}}₫</p>
                         <button class="btn-add-cart"
                                 data-name="{{name}}"
                                 data-price="{{price}}"
-                                data-img="/img/{{image}}">Thêm vào giỏ</button>
+                                data-img="/img/{{image}}">
+                            Thêm vào giỏ
+                        </button>
                     </div>
                 {{/each}}
             </div>
@@ -41,42 +66,63 @@
 
 <div id="cart-message">Đã thêm vào giỏ hàng</div>
 
-<script>
-    const cartMessage = document.getElementById('cart-message');
-    const addButtons = document.querySelectorAll('.btn-add-cart');
+    <script>
+        const cartMessage = document.getElementById('cart-message');
+        const addButtons = document.querySelectorAll('.btn-add-cart');
 
-    addButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const product = {
-                name: btn.dataset.name,
-                price: Number(btn.dataset.price),
-                img: btn.dataset.img,
-                qty: 1
-            };
+        // 1. Lấy trạng thái đăng nhập và ID người dùng từ Handlebars
+        const isLoggedIn = {{#if user}}true{{else}}false{{/if}};
+        const userId = "{{user._id}}";
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // 2. Tạo chìa khóa giỏ hàng riêng biệt cho từng User
+        // Ví dụ: cart_6582abc... thay vì dùng 'cart' chung cho mọi người
+        const cartKey = isLoggedIn ? `cart_${userId}` : 'cart_guest';
 
-            // Kiểm tra sản phẩm đã có
-            const existing = cart.find(item => item.name === product.name && item.img === product.img);
+        addButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
 
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push(product);
-            }
+                // --- BƯỚC 1: KIỂM TRA ĐĂNG NHẬP ---
+                if (!isLoggedIn) {
+                    alert("Bạn cần phải đăng ký hoặc đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                    window.location.href = "/sign";
+                    return;
+                }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
+                // --- BƯỚC 2: XỬ LÝ LƯU GIỎ HÀNG VÀO TÚI RIÊNG ---
+                const product = {
+                    name: btn.dataset.name,
+                    price: Number(btn.dataset.price),
+                    img: btn.dataset.img,
+                    qty: 1
+                };
 
-            // ⭐ Hiện thông báo nhẹ
-            cartMessage.style.display = 'block';
-            setTimeout(() => {
-                cartMessage.style.display = 'none';
+                // Lấy dữ liệu từ localStorage theo cartKey (ID của người dùng đó)
+                let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-                // ⭐ CHUYỂN SANG TRANG GIỎ HÀNG
-                window.location.href = "/giohang";
-            }, 400); // đợi popup hiển thị 0.4s rồi chuyển
+                const existing = cart.find(item => item.name === product.name && item.img === product.img);
+
+                if (existing) {
+                    existing.qty += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                // Lưu lại vào đúng ngăn chứa của tài khoản này
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+
+                // --- BƯỚC 3: HIỂN THỊ THÔNG BÁO VÀ CHUYỂN TRANG ---
+                if (cartMessage) {
+                    cartMessage.style.display = 'block';
+                    cartMessage.style.opacity = '1';
+                }
+
+                setTimeout(() => {
+                    // Chuyển hướng sang trang giỏ hàng
+                    window.location.href = "/giohang";
+                }, 400);
+            });
         });
-    });
-</script>
+    </script>
 
 

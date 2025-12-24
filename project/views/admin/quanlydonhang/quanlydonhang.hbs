@@ -1,3 +1,12 @@
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/quanlydonhang">Quản lý đơn hàng</a>
+    </li>
+</ol>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="font-weight-bold">Quản Lý Đơn Hàng</h2>
@@ -31,36 +40,48 @@
                             <div class="font-weight-bold">{{this.user.email}}</div>
                             <small class="text-muted">{{this.user.name}}</small>
                         </td>
-                        <td class="font-weight-bold">{{this.total}}₫</td>
+                        <td class="font-weight-bold text-danger">{{formatCurrency this.total}}₫</td>
                         <td>
                             {{#if (eq this.status "pending")}}
-                                <span class="badge badge-warning text-uppercase">Pending</span>
+                                <span class="badge bg-warning text-dark text-uppercase p-2">Pending</span>
                             {{/if}}
                             {{#if (eq this.status "completed")}}
-                                <span class="badge badge-success text-uppercase">Completed</span>
+                                <span class="badge bg-success text-white text-uppercase p-2">Completed</span>
                             {{/if}}
                             {{#if (eq this.status "cancelled")}}
-                                <span class="badge badge-danger text-uppercase">Cancelled</span>
+                                <span class="badge bg-danger text-white text-uppercase p-2">Cancelled</span>
                             {{/if}}
                         </td>
                         <td>{{formatDate this.createdAt}}</td>
                         <td>
                             <div class="d-flex align-items-center">
                                 {{#if (eq this.status "pending")}}
-                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="mr-1">
+                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="me-2"
+                                          onsubmit="return confirm('Bạn có chắc chắn muốn hoàn thành đơn hàng này?')">
                                         <input type="hidden" name="status" value="completed">
-                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-success btn-sm shadow-sm" title="Hoàn thành">
+                                            <i class="fas fa-check"></i>
+                                        </button>
                                     </form>
-                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="mr-1">
+
+                                    <form action="/admin/quanlydonhang/edit/{{this._id}}" method="POST" class="me-2"
+                                          onsubmit="return confirm('Cảnh báo: Bạn chắc chắn muốn HỦY đơn hàng này?')">
                                         <input type="hidden" name="status" value="cancelled">
-                                        <button class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                        <button class="btn btn-danger btn-sm shadow-sm" title="Hủy đơn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </form>
                                 {{/if}}
 
-                                <a href="/admin/quanlydonhang/edit/{{this._id}}" class="btn btn-info btn-sm mr-1">Chi tiết</a>
+                                <a href="/admin/quanlydonhang/edit/{{this._id}}" class="btn btn-info btn-sm text-white me-2" title="Chi tiết">
+                                    <i class="fas fa-eye"></i>
+                                </a>
 
-                                <form action="/admin/quanlydonhang/delete/{{this._id}}" method="POST" onsubmit="return confirm('Xóa đơn hàng này?')">
-                                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                <form action="/admin/quanlydonhang/delete/{{this._id}}" method="POST"
+                                      onsubmit="return confirm('Hành động này không thể hoàn tác. Xóa đơn hàng này?')">
+                                    <button class="btn btn-outline-danger btn-sm" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </div>
                         </td>

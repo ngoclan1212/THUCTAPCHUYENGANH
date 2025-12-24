@@ -20,31 +20,31 @@ router.get('/', async (req, res) => {
 // ==================
 // CREATE FORM
 // ==================
-router.get('/create', (req, res) => {
-    res.render('admin/User/create');
-});
+// router.get('/create', (req, res) => {
+//     res.render('admin/User/create');
+// });
 
 // ==================
 // CREATE USER
 // ==================
-router.post('/create', async (req, res) => {
-    try {
-        const { firstName, lastName, email, password, isActive } = req.body;
-
-        await User.create({
-            firstName,
-            lastName,
-            email,
-            password,
-            isActive: isActive === 'true'
-        });
-
-        res.redirect('/admin/User');
-    } catch (err) {
-        console.error(err);
-        res.redirect('/admin/User/create');
-    }
-});
+// router.post('/create', async (req, res) => {
+//     try {
+//         const { firstName, lastName, email, password, isActive } = req.body;
+//
+//         await User.create({
+//             firstName,
+//             lastName,
+//             email,
+//             password,
+//             isActive: isActive === 'true'
+//         });
+//
+//         res.redirect('/admin/User');
+//     } catch (err) {
+//         console.error(err);
+//         res.redirect('/admin/User/create');
+//     }
+// });
 
 // ==================
 // EDIT FORM

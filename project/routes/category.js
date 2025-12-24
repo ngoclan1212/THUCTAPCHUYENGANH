@@ -72,7 +72,9 @@ router.post('/create', function(req, res) {
         name: req.body.name,
         image: req.body.image,
         price: req.body.price,
-        category: req.body.category
+        category: req.body.category,
+        description: req.body.description,
+        meaning: req.body.meaning
     });
 
     item.save()
@@ -101,6 +103,8 @@ router.put('/edit/:id', function(req, res) {
         category.image = req.body.image;
         category.price = req.body.price;
         category.category = req.body.category;
+        category.description = req.body.description; // Thêm
+        category.meaning = req.body.meaning;         // Thêm
 
         category.save().then(() => {
             res.redirect('/admin/category');

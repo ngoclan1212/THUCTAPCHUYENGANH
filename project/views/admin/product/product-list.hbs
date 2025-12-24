@@ -1,37 +1,84 @@
-<a href="/admin/product/create" class="btn btn-primary">Thêm sản phẩm mới</a>
-<br><br>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Stt</th>
-        <th scope="col">Tên hoa</th>
-        <th scope="col">Hình ảnh</th>
-        <th scope="col">Giá</th>
-        <th scope="col">Danh mục</th>
-        <th scope="col">Sửa</th>
-        <th scope="col">Xóa</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider">
-    {{#each products}}
-        <tr>
-            <th scope="row">{{@index}}</th>
-            <td>{{this.name}}</td>
-            <td><img src="{{this.image}}" width="60" alt="{{this.name}}"></td>
-            <td>{{this.price}}₫</td>
-            <td>{{this.category.name}}</td> <td>
-            <a href="/admin/product/edit/{{this._id}}">
-                <i class="fa-solid fa-pen-to-square text-warning"></i>
-            </a>
-        </td>
-            <td>
-                <form action="/admin/product/{{this._id}}?_method=DELETE" method="POST">
-                    <button type="submit" style="border:none; background:none;">
-                        <i class="fa-solid fa-trash text-danger"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="/admin" class="text-decoration-none">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Tồn Kho</li>
+</ol>
+<div class="card shadow mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-danger">
+            📦 Tình trạng tồn kho
+        </h6>
+        <span class="badge badge-danger">Cảnh báo</span>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên hoa</th>
+                    <th>Số lượng tồn</th>
+                    <th>Trạng thái</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><img src="/img/5.jpg" width="60" class="img-thumbnail"></td>
+                    <td>Giỏ Hoa 81352</td>
+                    <td>
+                        <span class="badge badge-danger">5</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-danger">⚠ Sắp hết</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td><img src="/img/20.jpg" width="60" class="img-thumbnail"></td>
+                    <td>Giỏ Hoa 81347</td>
+                    <td>
+                        <span class="badge badge-warning">12</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-warning">⚠ Tồn thấp</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td><img src="/img/13.jpg" width="60" class="img-thumbnail"></td>
+                    <td>Hoa hướng dương cao cấp</td>
+                    <td>
+                        <span class="badge badge-success">45</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-success">✔ Ổn định</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td><img src="/img/15.jpg" width="60" class="img-thumbnail"></td>
+                    <td>Hoa mẫu mới</td>
+                    <td>
+                        <span class="badge badge-success">60</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-success">✔ Còn nhiều</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-footer text-muted small">
+        Hệ thống tự động cảnh báo khi tồn kho dưới 10 sản phẩm
+    </div>
+</div>
