@@ -51,14 +51,32 @@
             </div>
         </div>
     </div>
+    <div id="cart-message">Đã thêm vào giỏ hàng</div>
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const btnAddCart = document.querySelector('.btn-add-cart');
+        const cartMessage = document.getElementById("cart-message");
+
+        // 1. Lấy thông tin User từ Handlebars
+        const isLoggedIn = {{#if user}}true{{else}}false{{/if}};
+        const userId = "{{user._id}}";
+
+        // Tạo chìa khóa giỏ hàng (Đảm bảo giống hệt Index/Shop)
+        const cartKey = isLoggedIn ? `cart_${userId}` : 'cart_guest';
 
         if (btnAddCart) {
-            btnAddCart.addEventListener('click', function() {
-                // 1. Lấy dữ liệu từ attribute data-
+            btnAddCart.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // --- BƯỚC 1: KIỂM TRA ĐĂNG NHẬP ---
+                if (!isLoggedIn) {
+                    alert("Bạn cần phải đăng ký hoặc đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                    window.location.href = "/sign";
+                    return;
+                }
+
+                // --- BƯỚC 2: LẤY DỮ LIỆU SẢN PHẨM ---
                 const product = {
                     name: this.dataset.name,
                     price: Number(this.dataset.price),
@@ -66,10 +84,8 @@
                     qty: 1
                 };
 
-                // 2. Lấy giỏ hàng từ localStorage
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                // 3. Kiểm tra sản phẩm đã tồn tại trong giỏ chưa
+                // --- BƯỚC 3: XỬ LÝ LƯU GIỎ HÀNG VÀO TÚI RIÊNG ---
+                let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
                 const existing = cart.find(item => item.name === product.name && item.img === product.img);
 
                 if (existing) {
@@ -78,12 +94,18 @@
                     cart.push(product);
                 }
 
-                // 4. Lưu lại vào localStorage
-                localStorage.setItem('cart', JSON.stringify(cart));
+                localStorage.setItem(cartKey, JSON.stringify(cart));
 
-                // 5. Thông báo và chuyển hướng sang trang giỏ hàng
-                // Bạn có thể dùng alert hoặc chuyển hướng ngay lập tức
-                window.location.href = "/giohang";
+                // --- BƯỚC 4: HIỂN THỊ THÔNG BÁO (Dùng đúng logic Index) ---
+                if (cartMessage) {
+                    cartMessage.style.display = "block";
+                    cartMessage.style.opacity = "1";
+                }
+
+                // --- BƯỚC 5: CHUYỂN TRANG ---
+                setTimeout(() => {
+                    window.location.href = "/giohang";
+                }, 600);
             });
         }
     });
