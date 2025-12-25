@@ -109,9 +109,6 @@ passport.deserializeUser(async (id, done) => {
         done(err); // Pass the error to the done callback if an error occurred
     }
 });
-router.get('/forget', function(req, res, next) {
-    res.render('layouts/forget', { title: 'Forget N&Wool Flowers' });
-});
 
 router.get('/sign', function(req, res, next) {
     res.render('layouts/sign', { title: 'Sign N&Wool Flowers' });
