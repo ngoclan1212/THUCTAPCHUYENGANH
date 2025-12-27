@@ -3,6 +3,8 @@ var router = express.Router();
 const User = require('../models/User');
 const Category = require('../models/category');
 const DonHang = require('../models/DonHang');
+const Contact = require('../models/Contact');
+const Page = require('../models/Page');
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -32,10 +34,20 @@ router.get('/', async function(req, res, next) {
         next(err);
     }
 });
+router.get('/pages', async (req, res) => {
+    try {
+        const pageData = await Page.findOne().lean();
 
+        if (!pageData) {
+            console.log('Page chưa có dữ liệu');
+        }
 
-router.get('/pages', function(req, res, next) {
-    res.render('layouts/pages', { title: 'Trang' });
+        res.render('layouts/pages', {
+            page: pageData
+        });
+    } catch (err) {
+        res.status(500).send('Lỗi hệ thống');
+    }
 });
 
 router.get('/shop', async (req, res) => {
@@ -60,8 +72,27 @@ router.get('/shop', async (req, res) => {
     }
 });
 
-router.get('/contact', function(req, res, next) {
-    res.render('layouts/contact', { title: 'Liên Hệ' });
+// Tìm đoạn này trong file routes/index.js của bạn
+router.get('/contact', async function(req, res, next) {
+    try {
+        const contactData = await Contact.findOne().lean();
+
+        // THÊM DÒNG NÀY ĐỂ KIỂM TRA TRÊN TERMINAL (CMD)
+        console.log('--- KIỂM TRA DỮ LIỆU CONTACT ---');
+        console.log('Dữ liệu lấy được:', contactData);
+        if (contactData) {
+            console.log('Email hiện tại là:', contactData.email);
+        } else {
+            console.log('Không tìm thấy dữ liệu contact trong Database!');
+        }
+
+        res.render('layouts/contact', {
+            title: 'Liên Hệ',
+            contact: contactData
+        });
+    } catch (err) {
+        next(err);
+    }
 });
 
 //APP LOGIN
@@ -97,18 +128,7 @@ router.post('/login', (req, res, next) => {
         res.redirect('/');   // Sau khi login → về trang chủ
     });
 });
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
 
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await User.findById(id).exec();
-        done(null, user); // Pass the user to the done callback
-    } catch (err) {
-        done(err); // Pass the error to the done callback if an error occurred
-    }
-});
 
 router.get('/sign', function(req, res, next) {
     res.render('layouts/sign', { title: 'Sign N&Wool Flowers' });

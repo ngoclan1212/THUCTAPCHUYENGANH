@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// ==================
-// LIST USER
-// ==================
 router.get('/', async (req, res) => {
     try {
         const users = await User.find().lean();
@@ -17,38 +14,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// ==================
-// CREATE FORM
-// ==================
-// router.get('/create', (req, res) => {
-//     res.render('admin/User/create');
-// });
-
-// ==================
-// CREATE USER
-// ==================
-// router.post('/create', async (req, res) => {
-//     try {
-//         const { firstName, lastName, email, password, isActive } = req.body;
-//
-//         await User.create({
-//             firstName,
-//             lastName,
-//             email,
-//             password,
-//             isActive: isActive === 'true'
-//         });
-//
-//         res.redirect('/admin/User');
-//     } catch (err) {
-//         console.error(err);
-//         res.redirect('/admin/User/create');
-//     }
-// });
-
-// ==================
-// EDIT FORM
-// ==================
 router.get('/edit/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id).lean();
@@ -59,9 +24,6 @@ router.get('/edit/:id', async (req, res) => {
     }
 });
 
-// ==================
-// UPDATE USER
-// ==================
 router.put('/edit/:id', async (req, res) => {
     try {
         const { firstName, lastName, email, password, isActive } = req.body;
@@ -87,9 +49,6 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
-// ==================
-// DELETE USER
-// ==================
 router.post('/delete/:id', async (req, res) => {
     try {
         await User.findByIdAndDelete(req.params.id);

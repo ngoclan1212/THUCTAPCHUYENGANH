@@ -1,7 +1,11 @@
 <div id="flowerCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="/img/banner11.png" class="d-block w-100" alt="Banner 1" height="300" style="object-fit: cover;">
+            <img src="{{page.bannerImg}}"
+                 class="d-block w-100 img-premium"
+                 alt="Banner"
+                 height="300"
+                 style="object-fit: cover;">
         </div>
     </div>
 </div>
@@ -9,97 +13,194 @@
 <section class="brand-story-wrapper py-5">
     <div class="container">
 
+        <!-- ===== GIỚI THIỆU ===== -->
         <div class="row align-items-center mb-100 reveal">
             <div class="col-lg-5">
                 <div class="story-content">
-                    <span class="text-primary fw-bold text-uppercase tracking-widest">N&Fresh Flowers</span>
-                    <h2 class="display-5 fw-bold my-4" style="color: #0d47a1;">Hơi thở của thiên nhiên trong từng không gian sống</h2>
-                    <p class="lead text-muted">Chúng tôi tin rằng mỗi đóa hoa đều mang trong mình một linh hồn riêng, một thông điệp yêu thương cần được chuyển tải trọn vẹn.</p>
+                    <span class="text-primary fw-bold text-uppercase tracking-widest">
+                        {{page.pageTitle}}
+                    </span>
+
+                    <h2 class="display-5 fw-bold my-4" style="color:#0d47a1;">
+                        {{page.mainDescription}}
+                    </h2>
+
                     <p class="text-muted" style="text-align: justify;">
-                        Được thành lập với niềm đam mê nghệ thuật cắm hoa đương đại, N&Fresh Flowers không chỉ cung cấp những bó hoa tươi thắm mà còn mang đến giải pháp nghệ thuật cho không gian sống. Chúng tôi tuyển chọn kỹ lưỡng từng nhành hoa từ những trang trại bền vững nhất tại Đà Lạt và các nhà cung cấp quốc tế uy tín, đảm bảo mỗi sản phẩm đến tay khách hàng đều vẹn nguyên hương sắc tinh khôi.
+                        {{page.missionText}}
                     </p>
                 </div>
             </div>
+
             <div class="col-lg-7">
                 <div class="image-grid-premium">
                     <div class="item-large">
-                        <img src="/img/11.jpg" alt="Flower Art" class="rounded-4 shadow">
+                        <img src="{{page.imageLarge}}"
+                             class="rounded-4 shadow img-premium delay-1"
+                             alt="">
                     </div>
                     <div class="item-small shadow-lg">
-                        <img src="/img/1.jpg" alt="Detail" class="rounded-4">
+                        <img src="{{page.imageSmall}}"
+                             class="rounded-4 img-premium delay-2"
+                             alt="">
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- ===== GIÁ TRỊ THƯƠNG HIỆU ===== -->
         <div class="row g-4 mb-100 text-center">
-            <div class="col-md-4 reveal">
-                <div class="value-card p-5 rounded-4 shadow-sm">
-                    <i class="bi bi-heart-fill fs-1 text-primary mb-3"></i>
-                    <h4 class="fw-bold">Tận Tâm</h4>
-                    <p class="text-muted">Mỗi thiết kế là sự kết hợp giữa kỹ thuật điêu luyện và cảm xúc chân thành từ nghệ nhân.</p>
+            {{#each page.values}}
+                <div class="col-md-4 reveal">
+                    <div class="value-card p-5 rounded-4 shadow-sm
+                {{#if (eq @index 1)}}active-card{{/if}}">
+                        <i class="{{icon}} fs-1 mb-3
+                    {{#if (eq @index 1)}}text-white{{else}}text-primary{{/if}}"></i>
+
+                        <h4 class="fw-bold
+                    {{#if (eq @index 1)}}text-white{{/if}}">
+                            {{title}}
+                        </h4>
+
+                        <p class="
+                    {{#if (eq @index 1)}}text-white-50{{else}}text-muted{{/if}}">
+                            {{description}}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 reveal">
-                <div class="value-card p-5 rounded-4 shadow-sm active-card">
-                    <i class="bi bi-flower1 fs-1 text-white mb-3"></i>
-                    <h4 class="fw-bold text-white">Tươi Mới</h4>
-                    <p class="text-white-50">Hoa được nhập mới 100% mỗi ngày, cam kết độ bền và vẻ đẹp tự nhiên kéo dài.</p>
-                </div>
-            </div>
-            <div class="col-md-4 reveal">
-                <div class="value-card p-5 rounded-4 shadow-sm">
-                    <i class="bi bi-truck fs-1 text-primary mb-3"></i>
-                    <h4 class="fw-bold">Tốc Độ</h4>
-                    <p class="text-muted">Dịch vụ giao hoa hỏa tốc trong 2 giờ, giúp món quà ý nghĩa luôn đến đúng lúc.</p>
-                </div>
-            </div>
+            {{/each}}
         </div>
 
+
+        <!-- ===== SÁNG TẠO ===== -->
         <div class="row align-items-center flex-row-reverse reveal">
             <div class="col-lg-5">
                 <div class="story-content ps-lg-5">
-                    <h2 class="display-5 fw-bold mb-4" style="color: #0d47a1;">Sáng tạo không giới hạn</h2>
-                    <p class="text-muted">Tại N&Fresh, chúng tôi không ngừng cập nhật các xu hướng thiết kế hoa mới nhất từ phong cách Châu Âu lãng mạn đến nét tinh tế tối giản của Hàn Quốc.</p>
+                    <h2 class="display-5 fw-bold mb-4" style="color:#0d47a1;">
+                        {{page.creativeTitle}}
+                    </h2>
+
+                    <p class="text-muted">
+                        {{page.creativeDescription}}
+                    </p>
+
                     <ul class="list-unstyled custom-list mt-4">
                         <li><i class="bi bi-patch-check-fill text-primary me-2"></i> Miễn phí thiết kế thiệp và băng rôn nghệ thuật.</li>
                         <li><i class="bi bi-patch-check-fill text-primary me-2"></i> Tư vấn chọn hoa theo ý nghĩa và phong thủy.</li>
                         <li><i class="bi bi-patch-check-fill text-primary me-2"></i> Đội ngũ nghệ nhân trên 5 năm kinh nghiệm.</li>
                     </ul>
-                    <a href="/shop" class="btn btn-primary btn-lg rounded-pill px-5 mt-4 shadow-blue" style="background-color: #0d47a1; border: none;">Khám phá cửa hàng</a>
+
+                    <a href="/shop"
+                       class="btn btn-primary btn-lg rounded-pill px-5 mt-4 shadow-blue"
+                       style="background-color:#0d47a1;border:none;">
+                        Khám phá cửa hàng
+                    </a>
                 </div>
             </div>
+
             <div class="col-lg-7">
-                <img src="/img/14.jpg" class="img-fluid rounded-4 shadow-lg w-100" style="height: 450px; object-fit: cover;" alt="Creative">
+                <img src="{{page.creativeImage}}"
+                     class="img-fluid rounded-4 shadow-lg w-100 img-premium delay-3"
+                     style="height:450px;object-fit:cover;"
+                     alt="">
             </div>
         </div>
 
     </div>
 </section>
 
+<!-- ===== PARALLAX ===== -->
 <div class="parallax-banner-premium d-flex justify-content-center align-items-center">
     <div class="text-center text-white reveal">
         <h2 class="display-4 fw-bold">Bloom with Us 🌸</h2>
-        <p class="fs-5 opacity-75">Để cuộc sống luôn rực rỡ và ngập tràn hương sắc.</p>
+        <p class="fs-5 opacity-75">
+            Để cuộc sống luôn rực rỡ và ngập tràn hương sắc.
+        </p>
     </div>
 </div>
 
 <script>
-    function handleReveal() {
-        const reveals = document.querySelectorAll(".reveal");
-        const windowHeight = window.innerHeight;
-        const revealPoint = 100;
+    document.addEventListener("DOMContentLoaded", () => {
 
-        reveals.forEach(element => {
-            const revealTop = element.getBoundingClientRect().top;
-            if (revealTop < windowHeight - revealPoint) {
-                element.classList.add("active");
-            }
+        /* ===============================
+           1. ANIMATE IMAGE PREMIUM
+        =============================== */
+        const imageObserver = new IntersectionObserver(
+                (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("active");
+                            observer.unobserve(entry.target); // chạy 1 lần cho mượt
+                        }
+                    });
+                },
+                {
+                    threshold: 0.25,
+                    rootMargin: "0px 0px -80px 0px"
+                }
+        );
+
+        document.querySelectorAll(".img-premium").forEach(img => {
+            imageObserver.observe(img);
         });
-    }
 
-    // Chạy khi cuộn
-    window.addEventListener("scroll", handleReveal);
-    // Chạy ngay khi vừa load trang để hiện phần trên cùng
-    window.addEventListener("DOMContentLoaded", handleReveal);
+
+        /* ===============================
+           2. ANIMATE CARD / REVEAL
+        =============================== */
+        const revealObserver = new IntersectionObserver(
+                (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("active");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.2
+                }
+        );
+
+        document.querySelectorAll(".reveal").forEach(el => {
+            revealObserver.observe(el);
+        });
+
+
+        /* ===============================
+           3. 3D TILT THEO CHUỘT (XỊN)
+        =============================== */
+        document.querySelectorAll(".img-premium").forEach(img => {
+
+            img.addEventListener("mousemove", (e) => {
+                const rect = img.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = -(y - centerY) / 20;
+                const rotateY = (x - centerX) / 20;
+
+                img.style.transform = `
+                perspective(1000px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale(1.05)
+            `;
+            });
+
+            img.addEventListener("mouseleave", () => {
+                img.style.transform = `
+                perspective(1000px)
+                rotateX(0deg)
+                rotateY(0deg)
+                scale(1)
+            `;
+            });
+
+        });
+
+    });
 </script>
+

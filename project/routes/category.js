@@ -12,29 +12,7 @@ router.all('/*', (req, res, next) => {
     res.app.locals.layout = 'admin'; // Set layout for admin pages
     next();
 });
-/* GET home page. */
-// router.get('/*', function(
-//     req,
-//     res,
-//     next) {
-//     res.app.locals.layout = 'admin';
-//     next();
-// });
-// router.get('/', function(req, res) {
-//     Category.find({})
-//         .then(items => {
-//             const data = items.map((item, index) => ({
-//                 ...item.toObject(),
-//                 stt: index + 1
-//             }));
-//
-//             res.render('admin/category/category-list', { categories: data });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.send('Error loading category');
-//         });
-// });
+
 router.get('/', function(req, res) {
     // Thêm .lean() ở đây
     Category.find({}).lean()
@@ -51,23 +29,12 @@ router.get('/', function(req, res) {
         });
 });
 
-// router.get('/category', function(req, res, next) {
-//     res.render('admin/category/category-list', {title: 'Category'}) ;
-// });
 router.get('/create', function(req, res) {
     res.render('admin/category/create');
 });
 
 router.post('/create', function(req, res) {
-    // const newCategory = new Category({
-    //     name: req.body.name,
-    //     image: req.body.image.trim(),
-    //     status: req.body.status === 'true'
-    // });
-    //
-    // newCategory.save()
-    //     .then(() => res.redirect('/admin/category'))
-    //     .catch(err => res.send(err));
+
     const item = new Category({
         name: req.body.name,
         image: req.body.image,
@@ -87,16 +54,7 @@ router.get('/edit/:id', function(req, res) {
             {title: 'Edit Category', category: category.toObject()});
     })
 });
-// router.put('/edit/:id', function(req, res) {
-//     Category.findOne({_id: req.params.id}).then((category) => {
-//         category.name = req.body.name;
-//         category.image = req.body.image.trim();
-//         category.status = req.body.status === 'true';
-//         category.save().then ( savecategory => {
-//             res.redirect('/admin/category');
-//         })
-//     })
-// });
+
 router.put('/edit/:id', function(req, res) {
     Category.findById(req.params.id).then(category => {
         category.name = req.body.name;

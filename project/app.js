@@ -73,9 +73,27 @@
     //methor override
     app.use(methodOverride('_method'));
     app.use(flash());
+    app.use((req, res, next) => {
+        res.locals.success = req.flash("success");
+        res.locals.error = req.flash("error");
+        next();
+    });
     //PASSPORT
     app.use(passport.initialize());
     app.use(passport.session());
+
+    app.use(async (req, res, next) => {
+        try {
+            const pageData = await Page.findOne().lean();
+            res.locals.page = pageData || null;
+            next();
+        } catch (err) {
+            console.error("❌ Lỗi load Page:", err);
+            res.locals.page = null;
+            next();
+        }
+    });
+
 
     //You might also need custom middleware to make flash messages available in templates
     app.use((req, res, next) => {
@@ -87,6 +105,7 @@
         res.locals.errors = req.flash('errors');
         next();
     });
+
 
     var quanlydonhangRouter = require('./routes/quanlydonhang');
     var indexRouter = require('./routes/index');
@@ -122,6 +141,49 @@
     const bodyParser = require('body-parser');
     const {Strategy: LocalStrategy} = require("passport-local");
     const User = require('./models/User');
+
+    passport.use(new LocalStrategy(
+        { usernameField: 'email' },
+        async (email, password, done) => {
+            try {
+                const user = await User.findOne({ email });
+
+                if (!user) {
+                    return done(null, false, { message: 'Sai email hoặc mật khẩu' });
+                }
+
+                // 🚫 USER BỊ KHÓA → CẤM LOGIN
+                if (user.isActive === false) {
+                    return done(null, false, { message: 'Tài khoản đã bị khóa' });
+                }
+
+                const match = await bcryptjs.compare(password, user.password);
+                if (!match) {
+                    return done(null, false, { message: 'Sai email hoặc mật khẩu' });
+                }
+
+                return done(null, user);
+            } catch (err) {
+                return done(err);
+            }
+        }
+    ));
+
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(async (id, done) => {
+        try {
+            const user = await User.findById(id).exec();
+            done(null, user); // Pass the user to the done callback
+        } catch (err) {
+            done(err); // Pass the error to the done callback if an error occurred
+        }
+    });
+
+    const Contact = require('./models/Contact');
+    const Page = require('./models/Page');
     const bcryptjs = require('bcryptjs');
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -134,6 +196,69 @@
             console.error("Error connecting to MongDB:", err);
         });
 
+    // Thay thế đoạn cũ trong app.js bằng đoạn này:
+    Contact.findOne().then(async (contact) => {
+        const defaultData = {
+            description: "Chào mừng bạn đến với N&Fresh Flowers...",
+            address: "180 Cao Lỗ, Phường 4, Quận 8, TP.HCM (STU)",
+            hotline: "03 5932 9912",
+            email: "ngoclan121204@gmail.com",
+            workingHours: "08:00 - 21:00 (Hàng ngày)",
+            googleMapsUrl: "https://maps.google.com/..."
+        };
+
+        if (!contact) {
+            await Contact.create(defaultData);
+            console.log("✅ Đã tạo mới dữ liệu Contact mẫu!");
+        } else if (!contact.email) {
+            // Nếu đã có dữ liệu nhưng thiếu email thì cập nhật thêm email vào
+            await Contact.updateOne({}, { $set: { email: "ngoclan121204@gmail.com" } });
+            console.log("✅ Đã cập nhật bổ sung Email vào Contact!");
+        }
+    });
+    Page.findOne().then(page => {
+        if (!page) {
+            Page.create({
+                pageTitle: "N&Fresh Flowers",
+                mainDescription: "Hơi thở của thiên nhiên trong từng không gian sống",
+                missionText:
+                    "Chúng tôi tin rằng mỗi đóa hoa đều mang trong mình một linh hồn riêng, một thông điệp yêu thương cần được chuyển tải trọn vẹn.",
+
+                bannerImg: "/img/banner11.png",
+
+                imageLarge: "/img/9.jpg",
+                imageSmall: "/img/8.jpg",
+
+                values: [
+                    {
+                        icon: "bi bi-heart-fill",
+                        title: "Tận tâm",
+                        description: "Mỗi thiết kế là sự kết hợp giữa kỹ thuật và cảm xúc.",
+                        isActive: false
+                    },
+                    {
+                        icon: "bi bi-flower1",
+                        title: "Tươi mới",
+                        description: "Hoa nhập mới mỗi ngày, đảm bảo độ bền.",
+                        isActive: true
+                    },
+                    {
+                        icon: "bi bi-truck",
+                        title: "Tốc độ",
+                        description: "Giao hoa hỏa tốc trong 2 giờ.",
+                        isActive: false
+                    }
+                ],
+
+                creativeTitle: "Sáng tạo không giới hạn",
+                creativeDescription:
+                    "Luôn cập nhật xu hướng thiết kế hoa từ Châu Âu đến Hàn Quốc.",
+                creativeImage: "/img/10.jpg"
+            });
+
+            console.log("✅ Đã seed Page CMS chuẩn");
+        }
+    });
 
 
     app.post('/register',  (req,res) => {

@@ -1,0 +1,52 @@
+<h2 class="mb-4">Quản lý Page giới thiệu</h2>
+{{#if success}}
+    <div class="alert alert-success alert-dismissible fade show">
+        {{success}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+{{/if}}
+
+{{#if error}}
+    <div class="alert alert-danger alert-dismissible fade show">
+        {{error}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+{{/if}}
+<form action="/admin/page/update" method="POST">
+
+    <h4>Banner</h4>
+    <input class="form-control mb-3" name="bannerImg" value="{{pageData.bannerImg}}" placeholder="Link ảnh banner">
+
+    <h4>Nội dung chính</h4>
+    <input class="form-control mb-3" name="pageTitle" value="{{pageData.pageTitle}}" placeholder="Tiêu đề">
+    <textarea class="form-control mb-3" name="mainDescription" rows="2" placeholder="Mô tả ngắn">{{pageData.mainDescription}}</textarea>
+    <textarea class="form-control mb-3" name="missionText" rows="4" placeholder="Nội dung chi tiết">{{pageData.missionText}}</textarea>
+
+    <h4>Hình ảnh khối 1</h4>
+    <input class="form-control mb-3" name="imageLarge" value="{{pageData.imageLarge}}" placeholder="Ảnh lớn">
+    <input class="form-control mb-3" name="imageSmall" value="{{pageData.imageSmall}}" placeholder="Ảnh nhỏ">
+
+    <h4>Giá trị thương hiệu</h4>
+
+    {{#each pageData.values}}
+        <div class="border p-3 mb-3">
+            <input class="form-control mb-2" name="value_icon_{{inc @index}}" value="{{icon}}" placeholder="Icon (bi bi-heart)">
+            <input class="form-control mb-2" name="value_title_{{inc @index}}" value="{{title}}" placeholder="Tiêu đề">
+            <textarea class="form-control" name="value_desc_{{inc @index}}" placeholder="Mô tả">{{description}}</textarea>
+        </div>
+    {{/each}}
+
+    <label>Thẻ nổi bật:</label>
+    <select class="form-select mb-4" name="value_active">
+        <option value="1">Thẻ 1</option>
+        <option value="2">Thẻ 2</option>
+        <option value="3">Thẻ 3</option>
+    </select>
+
+    <h4>Khối sáng tạo</h4>
+    <input class="form-control mb-3" name="creativeTitle" value="{{pageData.creativeTitle}}" placeholder="Tiêu đề">
+    <textarea class="form-control mb-3" name="creativeDescription" rows="3" placeholder="Mô tả">{{pageData.creativeDescription}}</textarea>
+    <input class="form-control mb-4" name="creativeImage" value="{{pageData.creativeImage}}" placeholder="Link ảnh">
+
+    <button class="btn btn-primary">💾 Lưu thay đổi</button>
+</form>

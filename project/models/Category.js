@@ -21,19 +21,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-    name: {            // TÊN HOA
+    name: {
         type: String,
         required: true
     },
-    image: {           // HÌNH ẢNH
+    image: {
         type: String,
         required: true
     },
-    price: {           // GIÁ
+    price: {
         type: Number,
         required: true
     },
-    category: {        // DANH MỤC
+    category: {
         type: String,
         enum: ['bohoa', 'giohoa', 'top'],
         required: true

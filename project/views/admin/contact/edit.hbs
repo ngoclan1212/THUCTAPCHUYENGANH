@@ -1,0 +1,44 @@
+<div class="container mt-4">
+    <h3>Quản lý Thông Tin Liên Hệ</h3>
+    {{#if success}}
+        <div class="alert alert-success alert-dismissible fade show">
+            {{success}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {{/if}}
+
+    {{#if error}}
+        <div class="alert alert-danger alert-dismissible fade show">
+            {{error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {{/if}}
+
+    <form action="/admin/contact/update" method="POST" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label>Mô tả giới thiệu</label>
+            <textarea name="description" class="form-control" rows="4">{{contact.description}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label>Địa chỉ (STU):</label>
+            <input type="text" name="address" class="form-control" value="{{contact.address}}">
+        </div>
+        <div class="mb-3">
+            <label>Hotline:</label>
+            <input type="text" name="hotline" class="form-control" value="{{contact.hotline}}">
+        </div>
+        <div class="mb-3">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control" value="{{contact.email}}">
+        </div>
+        <div class="mb-3">
+            <label>Giờ làm việc:</label>
+            <input type="text" name="workingHours" class="form-control" value="{{contact.workingHours}}">
+        </div>
+        <div class="mb-3">
+            <label>Link Google Maps</label>
+            <input type="text" name="googleMapsUrl" class="form-control" value="{{contact.googleMapsUrl}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+    </form>
+</div>

@@ -1077,6 +1077,45 @@ footer p {
     url('/img/12.jpg') center/cover no-repeat fixed;
     height: 400px;
 }
+/* ===== PREMIUM IMAGE ANIMATION ===== */
+.img-premium {
+    opacity: 0;
+    transform:
+            perspective(1000px)
+            translateY(60px)
+            rotateX(8deg)
+            scale(0.95);
+    filter: blur(6px);
+    transition:
+            opacity 0.8s ease,
+            transform 1s cubic-bezier(.19,1,.22,1),
+            filter 0.8s ease;
+    will-change: transform, opacity;
+}
+
+.img-premium.active {
+    opacity: 1;
+    transform:
+            perspective(1000px)
+            translateY(0)
+            rotateX(0)
+            scale(1);
+    filter: blur(0);
+}
+
+/* ===== DELAY ===== */
+.delay-1 { transition-delay: .15s; }
+.delay-2 { transition-delay: .3s; }
+.delay-3 { transition-delay: .45s; }
+
+/* ===== HOVER 3D TILT ===== */
+.img-premium:hover {
+    transform:
+            perspective(1000px)
+            rotateX(0)
+            rotateY(-6deg)
+            scale(1.05);
+}
 
 
 /* === SHOP === */
