@@ -1,0 +1,89 @@
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Cấu hình Header Hệ thống</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/header/update" method="POST">
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tên cửa hàng (Brand Name)</label>
+                                <input type="text" name="brandName" class="form-control" value="{{headerConfig.brandName}}" placeholder="Ví dụ: N&Fresh Flowers">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Icon Logo (Bootstrap Icon Class)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi {{headerConfig.logoIcon}}"></i></span>
+                                    <input type="text" name="logoIcon" class="form-control" value="{{headerConfig.logoIcon}}" placeholder="Ví dụ: bi-flower1">
+                                </div>
+                                <small class="text-muted">Xem icon tại <a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a></small>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h6 class="fw-bold mb-3">Danh sách Menu điều hướng</h6>
+                        <div id="nav-items-container">
+                            {{#each headerConfig.navItems}}
+                                <div class="row g-2 mb-2 nav-item-row">
+                                    <div class="col-md-5">
+                                        <input type="text" name="labels[]" class="form-control" placeholder="Tên hiển thị (vd: Shop)" value="{{this.label}}">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" name="links[]" class="form-control" placeholder="Đường dẫn (vd: /shop)" value="{{this.link}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-outline-danger w-100" onclick="removeRow(this)">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="addRow()">
+                            <i class="bi bi-plus-circle me-1"></i> Thêm menu mới
+                        </button>
+
+                        <hr class="my-4">
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Cập nhật thay đổi</button>
+                            <a href="/admin" class="btn btn-light">Quay lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addRow() {
+        const container = document.getElementById('nav-items-container');
+        const newRow = document.createElement('div');
+        newRow.className = 'row g-2 mb-2 nav-item-row';
+        newRow.innerHTML = `
+            <div class="col-md-5">
+                <input type="text" name="labels[]" class="form-control" placeholder="Tên hiển thị">
+            </div>
+            <div class="col-md-5">
+                <input type="text" name="links[]" class="form-control" placeholder="Đường dẫn">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-danger w-100" onclick="removeRow(this)">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(newRow);
+    }
+
+    function removeRow(btn) {
+        const row = btn.closest('.nav-item-row');
+        row.remove();
+    }
+</script>

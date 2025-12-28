@@ -93,7 +93,17 @@
             next();
         }
     });
-
+    app.use(async (req, res, next) => {
+        try {
+            const footer = await Footer.findOne().lean();
+            res.locals.footer = footer || null;
+            next();
+        } catch (err) {
+            console.error("❌ Lỗi load Footer:", err);
+            res.locals.footer = null;
+            next();
+        }
+    });
 
     //You might also need custom middleware to make flash messages available in templates
     app.use((req, res, next) => {
@@ -184,6 +194,7 @@
 
     const Contact = require('./models/Contact');
     const Page = require('./models/Page');
+    const Footer = require('./models/Footer');
     const bcryptjs = require('bcryptjs');
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -257,6 +268,29 @@
             });
 
             console.log("✅ Đã seed Page CMS chuẩn");
+        }
+    });
+    Footer.findOne().then(f => {
+        if (!f) {
+            Footer.create({
+                shopName: "Shop Hoa Tươi Fresh Flowers",
+                slogan: "Chẳng phải đợi lâu, bạn chỉ cần đặt hàng và hoa sẽ được giao tận nơi trong chưa đầy 1h.",
+                address: "180 Cao Lỗ, Phường 4, Quận 8, TP.HCM",
+                hotline: "03 5932 9912",
+                email: "ngoclan121204@gmail.com",
+                openHours: "08:00 - 21:00 (Daily)",
+
+                support1: "Chính Sách Trả Hàng",
+                support2: "Chính Sách Bảo Hành",
+                support3: "Chính Sách Mua Hàng",
+                support4: "Chính Sách Người Dùng",
+
+                tag1: "Shop Tươi Fresh Flowers",
+                tag2: "N&Fresh Flowers",
+
+                copyright: "2025 N&Fresh Flowers. All rights reserved."
+            });
+            console.log("✅ Đã seed Footer CMS");
         }
     });
 

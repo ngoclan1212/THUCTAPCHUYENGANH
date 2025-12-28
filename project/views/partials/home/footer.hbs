@@ -1,52 +1,41 @@
-<!-- Footer -->
-<footer class="text-center text-white py-4 mt-5">
-    <div class="footer-top container mt-5 pb-5 text-white">
-        <div class="row">
+<footer class="footer-modern">
+    <div class="container">
+        <div class="row text-white">
 
-            <!-- Cột 1 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <h4 class="footer-title" >THÔNG TIN LIÊN HỆ</h4>
+            <div class="col-md-4">
+                <h5 class="footer-title">THÔNG TIN LIÊN HỆ</h5>
+                <p class="footer-shop">{{footer.shopName}}</p>
+                <p class="footer-slogan">{{footer.slogan}}</p>
 
-                <p class="fw-bold mt-3">Shop Hoa Tươi Fresh Flowers</p>
-                <p class="fst-italic">Chẳng phải đợi lâu, bạn chỉ cần đặt hàng và hoa sẽ được giao tận nơi trong chưa đầy 1h.</p>
-
-                <ul class="list-unstyled contact-info mb-4">
-                    <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-danger"></i><strong>Address</strong> 180 Cao Lỗ, Phường 4, Quận 8, TP.HCM</li>
-                    <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-danger"></i><strong>Hotline:</strong> 03 5932 9912</li>
-                    <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-danger"></i><strong>Email:</strong> ngoclan121204@gmail.com</li>
-                    <li><i class="bi bi-clock-fill me-2 text-danger"></i><strong>Opening Hours</strong> 08:00 - 21:00 (Daily)</li>
-                </ul>
-
-            </div>
-
-            <!-- Cột 2 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <h4 class="footer-title">HỖ TRỢ KHÁCH HÀNG</h4>
-                <ul class="footer-list mt-3">
-                    <li>Chính Sách Trả Hàng</li>
-                    <li>Chính Sách Bảo Hành</li>
-                    <li>Chính Sách Mua Hàng</li>
-                    <li>Chính Sách Người Dùng</li>
+                <ul class="footer-contact">
+                    <li><i class="bi bi-geo-alt"></i> {{footer.address}}</li>
+                    <li><i class="bi bi-telephone"></i> {{footer.hotline}}</li>
+                    <li><i class="bi bi-envelope"></i> {{footer.email}}</li>
+                    <li><i class="bi bi-clock"></i> {{footer.openHours}}</li>
                 </ul>
             </div>
 
-            <!-- Cột 3 -->
-            <div class="col-lg-4 col-md-12" >
-                <h4 class="footer-title">TÌM KIẾM NHIỀU NHẤT</h4>
+            <div class="col-md-4">
+                <h5 class="footer-title text-center">HỖ TRỢ KHÁCH HÀNG</h5>
+                <ul class="footer-links text-center">
+                    <li>{{footer.support1}}</li>
+                    <li>{{footer.support2}}</li>
+                    <li>{{footer.support3}}</li>
+                    <li>{{footer.support4}}</li>
+                </ul>
+            </div>
 
-                <div class="tag-box mt-3">
-                    <span >Shop Tươi Fresh Flowers</span> <br>
-                    <span>N&Fresh Flowers</span>
+            <div class="col-md-4 text-end">
+                <h5 class="footer-title">TÌM KIẾM NHIỀU NHẤT</h5>
+                <div class="footer-tags">
+                    <span>{{footer.tag1}}</span>
+                    <span>{{footer.tag2}}</span>
                 </div>
             </div>
-
         </div>
-    </div>
 
-    <p class="mb-2 fw-bold " >&copy; 2025 N&Fresh Flowers. All rights reserved.</p>
-    <div>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+        <div class="footer-bottom text-center mt-4">
+            © {{footer.copyright}}
+        </div>
     </div>
 </footer>

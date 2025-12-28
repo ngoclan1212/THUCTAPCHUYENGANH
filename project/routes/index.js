@@ -95,7 +95,6 @@ router.get('/contact', async function(req, res, next) {
     }
 });
 
-//APP LOGIN
 passport.use(new LocalStrategy({usernameField: 'email'}, function (email, password, done) {
     User.findOne({email: email}).then(user => {
         if (!user)
@@ -128,8 +127,6 @@ router.post('/login', (req, res, next) => {
         res.redirect('/');   // Sau khi login → về trang chủ
     });
 });
-
-
 router.get('/sign', function(req, res, next) {
     res.render('layouts/sign', { title: 'Sign N&Wool Flowers' });
 });

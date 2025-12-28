@@ -112,7 +112,7 @@
 
 @media (max-width: 768px) {
     .topbar {
-        display: none;    
+        display: none;
     }
 }
 /*** Topbar End ***/
@@ -207,16 +207,16 @@
 }
 
 #allCat {
-    position: absolute; 
-    left: 0; 
-    right: 0; 
-    top: 51px; 
-    z-index: 999; 
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 51px;
+    z-index: 999;
     background: var(--bs-light);
 }
 
 .nav-bar .navbar-toggler {
-    border-radius: 5px !important; 
+    border-radius: 5px !important;
     box-shadow: none !important;
 }
 
@@ -259,7 +259,7 @@
 
 .carousel .carousel-banner-offer {
     position: absolute;
-    top: 20px; 
+    top: 20px;
     left: 20px;
     display: flex;
     align-items: center;
@@ -270,7 +270,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0; 
+    top: 0;
     left: 0;
     padding: 30px;
     display: flex;
